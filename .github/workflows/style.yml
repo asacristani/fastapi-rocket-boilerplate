@@ -15,10 +15,8 @@ jobs:
       with:
         python-version: 3.11
 
-    - name: Install Poetry
-      run: |
-        pip install poetry
-        poetry install
+    - name: Install dependencies
+      run: pip install black isort flake8
 
     - name: Install pre-commit
       run: pip install pre-commit
