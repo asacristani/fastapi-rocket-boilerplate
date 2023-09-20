@@ -15,6 +15,9 @@ jobs:
       with:
         python-version: 3.11
 
+    - name: Install dependencies
+      run: poetry shell
+
     - name: Install pre-commit
       run: pip install pre-commit
 
