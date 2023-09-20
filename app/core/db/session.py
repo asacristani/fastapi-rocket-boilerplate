@@ -1,19 +1,17 @@
+from contextvars import ContextVar
+from typing import Dict, Optional, Union
+
+from sqlalchemy.engine import Engine
+from sqlalchemy.engine.url import URL
+from sqlalchemy.exc import NoResultFound
+from sqlalchemy.orm import sessionmaker as sessionmaker_
+from sqlmodel import Session, create_engine, select
 from starlette.middleware.base import (
     BaseHTTPMiddleware,
     RequestResponseEndpoint,
 )
 from starlette.requests import Request
 from starlette.types import ASGIApp
-
-from sqlalchemy.exc import NoResultFound
-from sqlalchemy.engine import Engine
-from sqlalchemy.engine.url import URL
-from sqlalchemy.orm import sessionmaker as sessionmaker_
-
-from sqlmodel import create_engine, Session, select
-from typing import Dict, Optional, Union
-
-from contextvars import ContextVar
 
 
 class sessionmaker(sessionmaker_):
@@ -29,13 +27,13 @@ _session: ContextVar[Optional[Session]] = ContextVar("_session", default=None)
 
 class DBSessionMiddleware(BaseHTTPMiddleware):
     def __init__(
-            self,
-            app: ASGIApp,
-            db_url: Optional[Union[str, URL]] = None,
-            custom_engine: Optional[Engine] = None,
-            engine_args: Dict = None,
-            session_args: Dict = None,
-            commit_on_exit: bool = False,
+        self,
+        app: ASGIApp,
+        db_url: Optional[Union[str, URL]] = None,
+        custom_engine: Optional[Engine] = None,
+        engine_args: Dict = None,
+        session_args: Dict = None,
+        commit_on_exit: bool = False,
     ):
         super().__init__(app)
         engine_args = engine_args or {}
@@ -54,9 +52,7 @@ class DBSessionMiddleware(BaseHTTPMiddleware):
         _Session = sessionmaker(bind=engine, **session_args)
 
     async def dispatch(
-            self,
-            request: Request,
-            call_next: RequestResponseEndpoint
+        self, request: Request, call_next: RequestResponseEndpoint
     ):
         with db(commit_on_exit=self.commit_on_exit):
             response = await call_next(request)
@@ -65,7 +61,8 @@ class DBSessionMiddleware(BaseHTTPMiddleware):
 
 class MissingSessionError(Exception):
     """
-    Exception raised for when the user tries to access a database session before
+    Exception raised for when the user tries to
+    access a database session before
     it is created.
     """
 
@@ -89,7 +86,7 @@ class SessionNotInitialisedError(Exception):
 
     def __init__(self):
         msg = """
-        Session not initialised! Ensure that DBSessionMiddleware has been 
+        Session not initialised! Ensure that DBSessionMiddleware has been
         initialised before attempting database access.
         """
         super().__init__(msg)
@@ -111,43 +108,51 @@ class DBSessionMeta(type):
 
     def get_one(self, model: any, key: any, value: any) -> object:
         try:
-            statement = select(model).where(key == value, model.deleted == False)
+            statement = select(model).where(
+                key == value, model.deleted == False
+            )
             result = self.session.exec(statement).one()
             return result
         except NoResultFound:
             return None
 
     def get_all(self, model: any, offset: int, limit: int, order_by: any):
-        """ Get all items excluding delete ones """
-        statement = select(model).where(model.deleted == False).order_by(order_by).offset(offset).limit(limit)
+        """Get all items excluding delete ones"""
+        statement = (
+            select(model)
+            .where(model.deleted == False)
+            .order_by(order_by)
+            .offset(offset)
+            .limit(limit)
+        )
         result = self.session.exec(statement).all()
         return result
 
     def update(self, item: any) -> object:
-        """ Create or modify """
+        """Create or modify"""
         self.session.add(item)
         self.session.commit()
         self.session.refresh(item)
         return item
 
     def delete(self, item: any) -> bool:
-        """ TODO: Add return False when exceptions are observed"""
+        """TODO: Add return False when exceptions are observed"""
         self.session.delete(item)
         self.session.commit()
         return True
 
     def count(self, model: any) -> int:
-        result = len(self.session.exec(
-            select(model).where(model.deleted == False)
-        ).all())
+        result = len(
+            self.session.exec(
+                select(model).where(model.deleted == False)
+            ).all()
+        )
         return result
 
 
 class DBSession(metaclass=DBSessionMeta):
     def __init__(
-        self,
-        session_args: Dict = None,
-        commit_on_exit: bool = False
+        self, session_args: Dict = None, commit_on_exit: bool = False
     ):
         self.token = None
         self.session_args = session_args or {}

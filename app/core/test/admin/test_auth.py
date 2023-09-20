@@ -1,10 +1,9 @@
 import pytest
-
 from fastapi.responses import RedirectResponse
 
+from app.core.admin.auth import AdminAuth
 from app.core.auth.functions import create_access_token
 from app.settings import settings
-from app.core.admin.auth import AdminAuth
 
 
 class MockRequest:
@@ -31,7 +30,12 @@ def valid_token():
 
 @pytest.mark.asyncio
 async def test_admin_auth_login_successful(admin_auth):
-    mock_request = MockRequest(form_data={"username": settings.admin_user, "password": settings.admin_pass})
+    mock_request = MockRequest(
+        form_data={
+            "username": settings.admin_user,
+            "password": settings.admin_pass,
+        }
+    )
 
     result = await admin_auth.login(mock_request)
 
@@ -40,7 +44,12 @@ async def test_admin_auth_login_successful(admin_auth):
 
 @pytest.mark.asyncio
 async def test_admin_auth_login_failed(admin_auth):
-    mock_request = MockRequest(form_data={"username": "invalid_username", "password": "invalid_password"})
+    mock_request = MockRequest(
+        form_data={
+            "username": "invalid_username",
+            "password": "invalid_password",
+        }
+    )
 
     result = await admin_auth.login(mock_request)
 

@@ -2,14 +2,13 @@ from fastapi import FastAPI, HTTPException
 from sqladmin import Admin
 from sqlalchemy.exc import OperationalError
 
-from .settings import settings
-from .core.db.engine import get_engine
-from .services.user.routes import router as user_router
-from .services.admin.config import admin_models, admin_views
 from .core.admin.auth import AdminAuth
-from .core.middleware.nocache import NoCacheMiddleware
+from .core.db.engine import get_engine
 from .core.middleware.db_session_context import DBSessionMiddleware
-
+from .core.middleware.nocache import NoCacheMiddleware
+from .services.admin.config import admin_models, admin_views
+from .services.user.routes import router as user_router
+from .settings import settings
 
 app = FastAPI()
 
@@ -19,8 +18,12 @@ for router in routers:
     app.include_router(router)
 
 # ADMIN
-admin = Admin(app, get_engine(), templates_dir="app/services/admin/templates",
-              authentication_backend=AdminAuth(secret_key=settings.secret_key))
+admin = Admin(
+    app,
+    get_engine(),
+    templates_dir="app/services/admin/templates",
+    authentication_backend=AdminAuth(secret_key=settings.secret_key),
+)
 for item in admin_models + admin_views:
     admin.add_view(item)
 

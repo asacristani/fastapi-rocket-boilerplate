@@ -1,21 +1,21 @@
-from sqladmin import ModelView, action
-from starlette.requests import Request
-from starlette.responses import RedirectResponse
-from sqladmin._queries import Query
 from typing import Any
 
-from app.core.models.record import Record
+from sqladmin import ModelView
+from sqladmin._queries import Query
+from starlette.requests import Request
 
+from app.core.models.record import Record
 
 source = "ADMIN"
 
 
 class ModelViewCore(ModelView):
-    """ ModelView custom base for sqladmin modelviews
+    """ModelView custom base for sqladmin modelviews
     Main reasons for this:
     - Create records with the changes
     - Modify delete for soft_delete
     """
+
     # List page
     column_list = "__all__"
 
@@ -31,7 +31,7 @@ class ModelViewCore(ModelView):
             model_id=model.id,
             source=source,
             action="CREATE",
-            owner=request.session.get("username")
+            owner=request.session.get("username"),
         ).save()
 
         return model
@@ -44,13 +44,14 @@ class ModelViewCore(ModelView):
             model_id=model.id,
             source=source,
             action="UPDATE",
-            owner=request.session.get("username")
+            owner=request.session.get("username"),
         ).save()
 
         return model
 
     async def delete_model(self, request: Request, pk: Any) -> None:
-        """ Overwrite default delete method for  safe_delete/reverse_delete methods"""
+        """Overwrite default delete method for
+        safe_delete/reverse_delete methods"""
         model: object = await self.get_object_for_edit(pk)
         if model.deleted:
             deleted = False
@@ -59,7 +60,7 @@ class ModelViewCore(ModelView):
             deleted = True
             action_description = "SOFT_DELETE"
 
-        data = {'deleted': deleted}
+        data = {"deleted": deleted}
         await Query(self).update(pk, data)
 
         Record(
@@ -67,5 +68,5 @@ class ModelViewCore(ModelView):
             model_id=pk,
             source=source,
             action=action_description,
-            owner=request.session.get("username")
+            owner=request.session.get("username"),
         ).save()

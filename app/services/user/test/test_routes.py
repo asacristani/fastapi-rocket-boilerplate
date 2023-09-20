@@ -1,13 +1,15 @@
 from unittest import TestCase
+
 import pytest
 
 from app.services.user.models import RevokedToken
 
 
 class TestUserRoutes(TestCase):
-
     @pytest.fixture(autouse=True)
-    def _db_mocked_app_client(self, db_mocked_app_client, user_mocked_info, db_mocked):
+    def _db_mocked_app_client(
+        self, db_mocked_app_client, user_mocked_info, db_mocked
+    ):
         self.app = db_mocked_app_client
         self.user_mocked_info = user_mocked_info
 
@@ -17,8 +19,8 @@ class TestUserRoutes(TestCase):
             url="user/register",
             json={
                 "username": "anyemail@anyprovider.com",
-                "password": "ultrasecretpassword"
-            }
+                "password": "ultrasecretpassword",
+            },
         )
 
         assert 201 == response.status_code
@@ -28,8 +30,8 @@ class TestUserRoutes(TestCase):
             url="user/register",
             json={
                 "username": "anyemail@anyprovider.com",
-                "password": "ultrasecretpassword"
-            }
+                "password": "ultrasecretpassword",
+            },
         )
 
         assert 400 == response.status_code
@@ -40,9 +42,8 @@ class TestUserRoutes(TestCase):
             url="user/login",
             data={
                 "username": self.user_mocked_info["username"],
-                "password": self.user_mocked_info["password"]
+                "password": self.user_mocked_info["password"],
             },
-
         )
 
         assert 200 == response.status_code
@@ -52,9 +53,8 @@ class TestUserRoutes(TestCase):
             url="user/login",
             data={
                 "username": self.user_mocked_info["username"],
-                "password": "incorrect password"
+                "password": "incorrect password",
             },
-
         )
 
         assert 400 == response.status_code
@@ -65,7 +65,7 @@ class TestUserRoutes(TestCase):
             url="user/login",
             data={
                 "username": self.user_mocked_info["username"],
-                "password": self.user_mocked_info["password"]
+                "password": self.user_mocked_info["password"],
             },
         )
 
@@ -80,7 +80,6 @@ class TestUserRoutes(TestCase):
             json={
                 "refresh_token": refresh_token_aux,
             },
-
         )
 
         assert "access_token" in response.json()
@@ -92,7 +91,6 @@ class TestUserRoutes(TestCase):
             json={
                 "refresh_token": "incorrect_refresh_token",
             },
-
         )
 
         assert 400 == response.status_code
@@ -101,7 +99,12 @@ class TestUserRoutes(TestCase):
         # Access to protected
         response = self.app.get(
             url="user/protected",
-            headers={"Authorization": f"{self.user_mocked_info['token_type']} {self.user_mocked_info['access_token']}"}
+            headers={
+                "Authorization": (
+                    f"{self.user_mocked_info['token_type']} "
+                    f"{self.user_mocked_info['access_token']}"
+                )
+            },
         )
 
         assert 200 == response.status_code
@@ -111,9 +114,8 @@ class TestUserRoutes(TestCase):
             url="user/login",
             data={
                 "username": self.user_mocked_info["username"],
-                "password": self.user_mocked_info["password"]
+                "password": self.user_mocked_info["password"],
             },
-
         )
 
         assert 200 == response.status_code
@@ -121,8 +123,7 @@ class TestUserRoutes(TestCase):
 
         # Logout and access to protected
         response = self.app.post(
-            url="user/logout",
-            json={"refresh_token": refresh_token}
+            url="user/logout", json={"refresh_token": refresh_token}
         )
 
         assert 200 == response.status_code
@@ -133,7 +134,6 @@ class TestUserRoutes(TestCase):
             json={
                 "refresh_token": refresh_token,
             },
-
         )
 
         assert 400 == response.status_code

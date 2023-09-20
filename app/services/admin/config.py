@@ -1,4 +1,4 @@
-from .models import UserAdmin, RevokedTokenAdmin, RecordAdmin
+from .models import RecordAdmin, RevokedTokenAdmin, UserAdmin
 from .views import ReportView
 
 admin_views = [ReportView]

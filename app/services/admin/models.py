@@ -1,7 +1,6 @@
-from app.core.models.record import Record
-from app.services.user.models import User, RevokedToken
-
 from app.core.admin.models import ModelViewCore
+from app.core.models.record import Record
+from app.services.user.models import RevokedToken, User
 
 
 class UserAdmin(ModelViewCore, model=User):
@@ -16,12 +15,18 @@ class UserAdmin(ModelViewCore, model=User):
     pass
 
     # General options
-    column_labels = {User.username: "email"}  # This modifies the name of the columns for list and detail pages
+    column_labels = {
+        User.username: "email"
+    }  # This modifies the name of the columns for list and detail pages
 
 
 class RevokedTokenAdmin(ModelViewCore, model=RevokedToken):
     icon = "fa-solid fa-ban"
-    column_list = [RevokedToken.created_datetime, RevokedToken.username, RevokedToken.token]
+    column_list = [
+        RevokedToken.created_datetime,
+        RevokedToken.username,
+        RevokedToken.token,
+    ]
 
 
 class RecordAdmin(ModelViewCore, model=Record):

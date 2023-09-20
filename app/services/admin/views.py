@@ -7,6 +7,7 @@ class ReportView(BaseView):
     """
     A simple test custom view
     """
+
     name = "Report Page (test)"
     icon = "fa-chart-line"
 

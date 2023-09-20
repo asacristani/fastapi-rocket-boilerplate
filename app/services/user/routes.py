@@ -1,43 +1,52 @@
-from fastapi import APIRouter, HTTPException, Depends, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Response, status
 from fastapi.security import OAuth2PasswordRequestForm
 
-
 from app.core.auth.functions import (
-    verify_refresh_token,
-    hash_password,
+    create_access_token,
     get_current_user,
-    create_access_token
-)
-from .schemas import UserRegistration, Tokens, TokenRefreshed, RefreshToken
-from .models import User, RevokedToken
-
-
-router = APIRouter(
-    prefix="/user",
-    tags=["user"]
+    hash_password,
+    verify_refresh_token,
 )
 
+from .models import RevokedToken, User
+from .schemas import RefreshToken, TokenRefreshed, Tokens, UserRegistration
 
-@router.post("/register",
-             responses={
-                 status.HTTP_201_CREATED: {"description": "User successfully registered",
-                                           "content": {"application/json":
-                                                           {"example": "User 'anyemail@anyprovider.com' created"}}},
-                 status.HTTP_400_BAD_REQUEST: {"description": "User already registered",
-                                               "content": {"application/json":
-                                                               {"example": "This user is already registered"}}},
-             },
-             status_code=status.HTTP_201_CREATED,
-             )
+router = APIRouter(prefix="/user", tags=["user"])
+
+
+@router.post(
+    "/register",
+    responses={
+        status.HTTP_201_CREATED: {
+            "description": "User successfully registered",
+            "content": {
+                "application/json": {
+                    "example": "User 'anyemail@anyprovider.com' created"
+                }
+            },
+        },
+        status.HTTP_400_BAD_REQUEST: {
+            "description": "User already registered",
+            "content": {
+                "application/json": {
+                    "example": "This user is already registered"
+                }
+            },
+        },
+    },
+    status_code=status.HTTP_201_CREATED,
+)
 def register_user(user: UserRegistration, response: Response):
-    """ Register new user
+    """Register new user
     - Check if the user exists
     - Save in DB
     return: Confirmation OR denial
     """
     # Check if the user exists
     if User.get_one(key=User.username, value=user.username):
-        raise HTTPException(status_code=400, detail="This user is already registered")
+        raise HTTPException(
+            status_code=400, detail="This user is already registered"
+        )
 
     # Hash password
     hashed_password = hash_password(user.password)
@@ -48,33 +57,45 @@ def register_user(user: UserRegistration, response: Response):
     return f"User '{user.username}' created"
 
 
-@router.post("/login", response_model=Tokens,
-             responses={
-                 status.HTTP_400_BAD_REQUEST: {"description": "Invalid credentials",
-                                               "content": {
-                                                   "application/json": {"example": "Invalid credentials"}}},
-             },
-             )
+@router.post(
+    "/login",
+    response_model=Tokens,
+    responses={
+        status.HTTP_400_BAD_REQUEST: {
+            "description": "Invalid credentials",
+            "content": {
+                "application/json": {"example": "Invalid credentials"}
+            },
+        },
+    },
+)
 def login_user(form_data: OAuth2PasswordRequestForm = Depends()):
     """
     Login with username and password
     return: A pair of access and refresh tokens OR denial
     """
     # Authenticate user
-    if not (tokens := User.authenticate_user(form_data.username, form_data.password)):
+    if not (
+        tokens := User.authenticate_user(
+            form_data.username, form_data.password
+        )
+    ):
         raise HTTPException(status_code=400, detail="Invalid credentials")
 
     # Return tokens
     return tokens
 
 
-@router.post("/refresh-token", response_model=TokenRefreshed,
-             responses={
-                 status.HTTP_400_BAD_REQUEST: {"description": "Unauthorized or revoked token",
-                                               "content": {
-                                                   "application/json": {"example": "Not authorized"}}},
-             },
-             )
+@router.post(
+    "/refresh-token",
+    response_model=TokenRefreshed,
+    responses={
+        status.HTTP_400_BAD_REQUEST: {
+            "description": "Unauthorized or revoked token",
+            "content": {"application/json": {"example": "Not authorized"}},
+        },
+    },
+)
 def refresh_token(refresh_token: RefreshToken):
     """
     Refresh access token from a refresh token
@@ -99,7 +120,8 @@ def refresh_token(refresh_token: RefreshToken):
 def logout(refresh_token: RefreshToken):
     """
     Revoke refresh token
-    # TODO: Once installed Celery, include a cron task to remove expired revoked tokens
+    # TODO: Once installed Celery,
+    # TODO: include a cron task to remove expired revoked tokens
     return: Always return 200 OK (for security reasons)
     """
     refresh_token = refresh_token.refresh_token
@@ -111,12 +133,19 @@ def logout(refresh_token: RefreshToken):
         token = refresh_token
 
         # Save revoked token in DB
-        RevokedToken(username=username, expiration_date=expiration_date, token=token).save()
+        RevokedToken(
+            username=username, expiration_date=expiration_date, token=token
+        ).save()
 
     return {"message": "Refresh token successfully revoked"}
 
 
 @router.get("/protected")
 def protected_route(current_user: str = Depends(get_current_user)):
-    """ Endpoint for auth test"""
-    return {"message": f"¡Hola, {current_user}! This is a protected url and you are inside!"}
+    """Endpoint for auth test"""
+    return {
+        "message": (
+            f"¡Hola, {current_user}! This is a protected url and you are"
+            " inside!"
+        )
+    }

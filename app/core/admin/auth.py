@@ -1,9 +1,9 @@
-from sqladmin.authentication import AuthenticationBackend
 from fastapi import Request
 from fastapi.responses import RedirectResponse
+from sqladmin.authentication import AuthenticationBackend
 
-from app.settings import settings
 from app.core.auth.functions import create_access_token, get_current_admin
+from app.settings import settings
 
 
 class AdminAuth(AuthenticationBackend):
@@ -12,7 +12,10 @@ class AdminAuth(AuthenticationBackend):
         username, password = form["username"], form["password"]
 
         # Validate username/password credentials
-        if not username == settings.admin_user or not password == settings.admin_pass:
+        if (
+            not username == settings.admin_user
+            or not password == settings.admin_pass
+        ):
             return False
 
         # And update session
@@ -31,6 +34,8 @@ class AdminAuth(AuthenticationBackend):
 
         # Validate token
         if not token or not (username := get_current_admin(token=token)):
-            return RedirectResponse(request.url_for("admin:login"), status_code=302)
+            return RedirectResponse(
+                request.url_for("admin:login"), status_code=302
+            )
 
         request.session.update({"username": username})
