@@ -1,6 +1,5 @@
 # TEST
 .coverage
-.coveragerc
 .pytest_cache
 __pycache__
 

@@ -38,7 +38,6 @@ mypy = "^1.5.1"
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
-
 [tool.black]
 line-length = 79
 
