@@ -46,7 +46,8 @@ jobs:
         with:
           python-version: 3.11
 
+      - name: Install dependencies
+        run: make install
+
       - name: Run Unit Tests
-        run: |
-          make install
-          make test
+        run: make test

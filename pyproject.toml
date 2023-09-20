@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "backend-core"
+name = "fastapi-core"
 version = "0.1.0"
 description = "The best core for the best backend!"
 authors = ["adrian.sacristan <adriansacrista1993n@gmail.com>"]
