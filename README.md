@@ -44,6 +44,11 @@ Install the requirements with Poetry for developing, testing and debugging purpo
 
 `make install`
 
+If you want to use the pre-commit with the same style checks than the CI pipeline:
+
+`pre-commit install`
+
+You can test the pre-commit without comiting running `pre-commit run --all-files`
 ### 🔌 Build and run
 Build and run the Docker services for using in Local.
 
@@ -162,7 +167,7 @@ Also, it is possible you want to modify the expiry time of access/refresh tokens
 - Relationship of records into model details (performance)
 
 ### Others
-- Pre-commit
+- Add mypy and pylint to the Pre-commit
 - Integrity tests
 - Use async/await for routes and database connections
 - Aync/cron tasks with Celery + RabbitMQ
