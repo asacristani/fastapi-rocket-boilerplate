@@ -1,0 +1,11 @@
+# TEST
+.coverage
+.coveragerc
+.pytest_cache
+__pycache__
+
+# IDE
+.idea
+
+# VENV
+venv
