@@ -1,9 +1,9 @@
-name: Pre-commit Checks
+name: Style
 
 on: [push, pull_request]
 
 jobs:
-  pre-commit:
+  style:
     runs-on: ubuntu-latest
 
     steps:
