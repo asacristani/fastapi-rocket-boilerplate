@@ -1,4 +1,11 @@
 TODO: add testing coverage, python versions, test passing
+<p align="center">
+<a href="https://github.com/AdrianPayne/fastapi-core/actions/workflows/ci.yml" target="_blank">
+    <img src="https://github.com/AdrianPayne/fastapi-core/actions/workflows/ci.yml" alt="Test">
+</p>
+
+[![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/)
+[![Test](https://github.com/AdrianPayne/fastapi-core/actions/workflows/ci.yml/badge.svg)](https://github.com/AdrianPayne/fastapi-core/actions/workflows/ci.yml)
 
 # 🐍💨 FastAPI Core
 FastAPI core to build an API based in Python with its most modern technologies!
