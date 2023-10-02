@@ -1,11 +1,10 @@
-# TODO: add testing coverage
-# TODO: add more? check other repositories 
+TODO: add testing coverage, python versions, test passing
 
 # 🐍💨 FastAPI Core
 FastAPI core to build an API based in Python with its most modern technologies!
 
 ## 🧩 Features
-# TODO: improve stetic
+TODO: improve beauty
 - Use -> Makefile
 - DEV encapsulation -> Docker compose
 - Dependencies -> Poetry
@@ -32,10 +31,8 @@ FastAPI core to build an API based in Python with its most modern technologies!
 All this using Python 3.11
 
 ## ⚙️ Requirements
-# TODO: add links
-- Python 3.11
-- Docker
-- GNU system?
+- [Python 3.11](https://www.python.org/downloads/release/python-3114/)
+- [Docker](https://docs.docker.com/engine/install/)
 
 
 ## 🎛️  Use
@@ -150,10 +147,10 @@ Use Poetry like:
 poetry add <new_dependency>
 ```
 
-### 🗜️ Enviroment variables
+### 🗜️ Environment variables
 You should change the next env vars in `.env`:
 - Password hash:
-  - SECRET_KEY: run `TODO` to generate a new one
+  - SECRET_KEY: run in the terminal `openssl rand -base64 32` to generate a new one
 - Admin superuser:
   - ADMIN_USER
   - ADMIN_PASS
@@ -167,6 +164,8 @@ Also, it is possible you want to modify the expiry time of access/refresh tokens
 - Relationship of records into model details (performance)
 
 ### Others
+- Add logging
+- Cover 100% with unit-testing
 - Add mypy and pylint to the Pre-commit
 - Integrity tests
 - Use async/await for routes and database connections
