@@ -19,16 +19,16 @@
 ---
 
 <p align="center">
-  <a href="https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi">
+  <a href="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54">
       <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54
 " alt="Python">
   </a>
   <a href="https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi">
       <img src="https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi" alt="Fastapi">
   </a>
-  <a href="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white">
-      <img src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white
-  " alt="Postgresql">
+  <a href="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white">
+      <img src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white"
+      alt="Postgresql">
   </a>
   <a href="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white">
       <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
@@ -36,6 +36,8 @@
 </p>
 
 <p align="center"> Also sqlmodel, pydantic, alembic, poetry, ...</p>
+
+---
 
 ## 🧩 Features
 
