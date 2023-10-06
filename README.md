@@ -19,18 +19,18 @@
 ---
 
 <p align="center">
-  <a href="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54">
-      <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54
-" alt="Python">
+  <a href="https://www.python.org/">
+      <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54"
+      alt="Python">
   </a>
-  <a href="https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi">
+  <a href="https://fastapi.tiangolo.com/">
       <img src="https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi" alt="Fastapi">
   </a>
-  <a href="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white">
+  <a href="https://www.postgresql.org/">
       <img src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white"
       alt="Postgresql">
   </a>
-  <a href="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white">
+  <a href="https://www.docker.com/">
       <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
   </a>
 </p>
