@@ -1,41 +1,52 @@
-TODO: add testing coverage, python versions, test passing
 <p align="center">
-<a href="https://github.com/AdrianPayne/fastapi-core/actions/workflows/ci.yml" target="_blank">
-    <img src="https://github.com/AdrianPayne/fastapi-core/actions/workflows/ci.yml" alt="Test">
+  <img src="https://lh3.googleusercontent.com/d/1ybx89iD_4jebLFgYqNAK4HxQOrniWj3y=s220?authuser=0">
+</p>
+<p align="center">
+  <a href="https://github.com/AdrianPayne/fastapi-core/actions/workflows/ci.yml" target="_blank">
+      <img src="https://github.com/AdrianPayne/fastapi-core/actions/workflows/ci.yml/badge.svg" alt="Test">
+  </a>
+  <a href="https://www.python.org/downloads/release/python-3110/" target="_blank">
+      <img src="https://img.shields.io/badge/Coverage-95.97%25-%2347C21F?logo=github" alt="Coverage">
+  </a>
+  <a href="https://www.python.org/downloads/release/python-3110/" target="_blank">
+      <img src="https://img.shields.io/badge/Python-3.11-blue?logo=python" alt="Python 3.11">
+  </a>
+</p>
+<p align="center">
+  <i>🐍💨 FastAPI Rocket Boilerplate to build an API based in Python with its most modern technologies!</i>
 </p>
 
-[![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/)
-[![Test](https://github.com/AdrianPayne/fastapi-core/actions/workflows/ci.yml/badge.svg)](https://github.com/AdrianPayne/fastapi-core/actions/workflows/ci.yml)
+---
 
-# 🐍💨 FastAPI Core
-FastAPI core to build an API based in Python with its most modern technologies!
+<p align="center">
+  <a href="https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi">
+      <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54
+" alt="Python">
+  </a>
+  <a href="https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi">
+      <img src="https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi" alt="Fastapi">
+  </a>
+  <a href="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white">
+      <img src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white
+  " alt="Postgresql">
+  </a>
+  <a href="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white">
+      <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
+  </a>
+</p>
+
+<p align="center"> Also sqlmodel, pydantic, alembic, poetry, ...</p>
 
 ## 🧩 Features
-TODO: improve beauty
-- Use -> Makefile
-- DEV encapsulation -> Docker compose
-- Dependencies -> Poetry
-- DB -> PostgreSQL
-- Migrations -> Alembic
-- Authentication -> Oauth2
-  - access and refresh tokens
-  - email verification (later)
-  - role scopes (later)
-- ORM -> SQLModel
-  - Base model with all the DB logic needed
-  - Changes/events record
-- Admin dashboard -> sqladmin
-  - Config user
-  - Delete as soft delete
-  - AuthX for accessing
-  - Event records
-- Testing -> Pytest and Unittest
-  - Unit testing mocking the rest of services
-  - Integrity testing
-- Pre commit -> flake, XXXX
-- CI -> Github actions
 
-All this using Python 3.11
+- **Infrastructure**: the common services that every backend needs, served by Docker Compose.
+- **Easy**: all the commands ready by Makefile.
+- **Fast**: thanks to Fastapi and async programming.
+- **ORM**: custom sqlmodel orm as django orm and mongoengine.
+- **Authentication**: OAuth2 with access/refresh tokens.
+- **Admin dashboard**: custom admin dashboard as django by sqladmin.
+- **Reliable**: CI, integrity testing and covered by unit test at 95%.
+
 
 ## ⚙️ Requirements
 - [Python 3.11](https://www.python.org/downloads/release/python-3114/)
@@ -44,15 +55,19 @@ All this using Python 3.11
 
 ## 🎛️  Use
 ### 🔧 Installation
-Install the requirements with Poetry for developing, testing and debugging purposes.
+1. Clone the repo
+
+
+2. Install the requirements with Poetry for developing, testing and debugging purposes.
 
 `make install`
 
-If you want to use the pre-commit with the same style checks than the CI pipeline:
+3. If you want to use the pre-commit with the same style-check that the CI pipeline:
 
 `pre-commit install`
 
-You can test the pre-commit without comiting running `pre-commit run --all-files`
+>ℹ️ You can test the pre-commit without comiting running `pre-commit run --all-files`
+
 ### 🔌 Build and run
 Build and run the Docker services for using in Local.
 
@@ -172,11 +187,13 @@ Also, it is possible you want to modify the expiry time of access/refresh tokens
 
 ### Others
 - Add logging
+- Integrity tests
+- Aync/cron tasks with Celery + RabbitMQ
+- TypeScript client
+
+
 - Cover 100% with unit-testing
 - Add mypy and pylint to the Pre-commit
-- Integrity tests
 - Use async/await for routes and database connections
-- Aync/cron tasks with Celery + RabbitMQ
 - Authentication client with Google
-- TypeScript client
 - Deployment with Kubernetes in Google Cloud by Terraform
