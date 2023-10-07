@@ -18,6 +18,16 @@ class Settings(BaseSettings):
     admin_user: str
     admin_pass: str
 
+    # RabbitMQ
+    rabbit_user: str
+    rabbit_password: str
+    rabbit_host: str
+    rabbit_port: str
+
+    # Redis
+    redis_host: str
+    redis_port: str
+
     class Config:
         env_file = ".env"
 

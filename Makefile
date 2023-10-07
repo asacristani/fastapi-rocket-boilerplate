@@ -20,3 +20,6 @@ data_test:
 
 alembic_downgrade:
 	docker-compose run app alembic downgrade base
+
+format:
+	black .

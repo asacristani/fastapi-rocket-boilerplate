@@ -6,7 +6,7 @@
       <img src="https://github.com/AdrianPayne/fastapi-core/actions/workflows/ci.yml/badge.svg" alt="Test">
   </a>
   <a href="https://www.python.org/downloads/release/python-3110/" target="_blank">
-      <img src="https://img.shields.io/badge/Coverage-95.97%25-%2347C21F?logo=github" alt="Coverage">
+      <img src="https://img.shields.io/badge/Coverage-96.26%25-%2347C21F?logo=github" alt="Coverage">
   </a>
   <a href="https://www.python.org/downloads/release/python-3110/" target="_blank">
       <img src="https://img.shields.io/badge/Python-3.11-blue?logo=python" alt="Python 3.11">
@@ -30,6 +30,16 @@
       <img src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white"
       alt="Postgresql">
   </a>
+  <a href="https://docs.celeryq.dev/en/stable/">
+      <img src="https://img.shields.io/badge/celery-%2337814A.svg?&style=for-the-badge&logo=celery&logoColor=white" alt="Celery"/>
+  </a>
+  
+  <a href="https://www.rabbitmq.com/">
+      <img src="https://img.shields.io/badge/Rabbitmq-FF6600?style=for-the-badge&logo=rabbitmq&logoColor=white" alt="Rabbitmq">
+  </a>
+  <a href="https://redis.com/" target="_blank">
+      <img src="https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white" alt="Redis">
+  </a>
   <a href="https://www.docker.com/">
       <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
   </a>
@@ -44,6 +54,7 @@
 - **Infrastructure**: the common services that every backend needs, served by Docker Compose.
 - **Easy**: all the commands ready by Makefile.
 - **Fast**: thanks to Fastapi and async programming.
+- **Async**: Celery using RabbitMQ as broker and Redis as backend.
 - **ORM**: custom sqlmodel orm as django orm and mongoengine.
 - **Authentication**: OAuth2 with access/refresh tokens.
 - **Admin dashboard**: custom admin dashboard as django by sqladmin.
@@ -78,6 +89,7 @@ Build and run the Docker services for using in Local.
 Congrats! the API is working at this point, you can check:
 - Docs: http://localhost:8000/docs
 - Admin: http://localhost:8000/admin
+- RabbitMQ: http://localhost:15672/
 
 For admin, use:
 ```shell
@@ -188,14 +200,13 @@ Also, it is possible you want to modify the expiry time of access/refresh tokens
 - Relationship of records into model details (performance)
 
 ### Others
-- Add logging
-- Integrity tests
-- Aync/cron tasks with Celery + RabbitMQ
 - TypeScript client
+- Deployment with Kubernetes in Google Cloud by Terraform
+- Add logging
 
 
+- Integrity tests
 - Cover 100% with unit-testing
 - Add mypy and pylint to the Pre-commit
 - Use async/await for routes and database connections
 - Authentication client with Google
-- Deployment with Kubernetes in Google Cloud by Terraform

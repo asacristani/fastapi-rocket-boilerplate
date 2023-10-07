@@ -15,20 +15,39 @@ class TestMain(TestCase):
         assert 200 == response.status_code
 
     def test_check_health_ok(self):
-        with patch("app.main.get_engine", MagicMock()) as mock_connect:
-            mock_connect.connect().return_value = object()
-
+        with patch("app.main.get_engine", MagicMock()), patch(
+            "app.main.celery", MagicMock()
+        ), patch("app.main.pika", MagicMock()), patch(
+            "app.main.redis", MagicMock()
+        ):
             response = self.app.get("/check_health")
-
-            assert 1 == mock_connect.connect.call_count
             assert 200 == response.status_code
 
     def test_check_health_ko(self):
-        with patch("app.main.get_engine", MagicMock()) as mock_get_engine:
+        with patch(
+            "app.main.get_engine", MagicMock()
+        ) as mock_get_engine, patch(
+            "app.main.celery", MagicMock()
+        ) as mock_celery, patch(
+            "app.main.pika.BlockingConnection", MagicMock()
+        ) as mock_pika, patch(
+            "app.main.redis.StrictRedis", MagicMock()
+        ) as mock_redis:
             mock_get_engine.return_value.connect.side_effect = (
                 OperationalError("test", "test", "test")
+            )
+            mock_celery.control.inspect.return_value.ping.return_value = False
+            mock_pika.side_effect = Exception("Mocked exception")
+            mock_redis.return_value.ping.side_effect = Exception(
+                "Mocked exception"
             )
 
             response = self.app.get("/check_health")
 
-            assert 503 == response.status_code
+            assert 200 == response.status_code
+            assert {
+                "celery": "down",
+                "db": "down",
+                "rabbitmq": "down",
+                "redis": "down",
+            } == response.json()

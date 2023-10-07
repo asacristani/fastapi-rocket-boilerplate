@@ -1,8 +1,11 @@
-from fastapi import FastAPI, HTTPException
+import pika
+import redis
+from fastapi import FastAPI
 from sqladmin import Admin
 from sqlalchemy.exc import OperationalError
 
 from .core.admin.auth import AdminAuth
+from .core.celery import celery
 from .core.db.engine import get_engine
 from .core.middleware.db_session_context import DBSessionMiddleware
 from .core.middleware.nocache import NoCacheMiddleware
@@ -50,8 +53,46 @@ async def check_health():
     """
     Check all the services in the infrastructure are working
     """
+    ok_code = "running"
+    ko_code = "down"
+
+    # DB check
     db_status = check_db_connection()
     if db_status:
-        return {"status": "healthy", "message": "Database connection is good"}
+        db_status = ok_code
     else:
-        raise HTTPException(status_code=503, detail="Service unavailable")
+        db_status = ko_code
+
+    # Celery check
+    celery_status = celery.control.inspect().ping()
+    if celery_status:
+        celery_status = ok_code
+    else:
+        celery_status = ko_code
+
+    # RabbitMQ check
+    try:
+        connection = pika.BlockingConnection(
+            pika.ConnectionParameters(host=settings.rabbit_host)
+        )
+        connection.close()
+        rabbitmq_check = ok_code
+    except Exception:
+        rabbitmq_check = ko_code
+
+    # Redis check
+    try:
+        redis_client = redis.StrictRedis(
+            host=settings.redis_host, port=settings.redis_port
+        )
+        redis_client.ping()
+        redis_status = ok_code
+    except Exception:
+        redis_status = ko_code
+
+    return {
+        "db": db_status,
+        "celery": celery_status,
+        "rabbitmq": rabbitmq_check,
+        "redis": redis_status,
+    }
