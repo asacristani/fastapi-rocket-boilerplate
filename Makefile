@@ -23,3 +23,7 @@ alembic_downgrade:
 
 format:
 	black .
+
+generate_sdk:
+	python sdk_client_script.py
+	npm run generate-client

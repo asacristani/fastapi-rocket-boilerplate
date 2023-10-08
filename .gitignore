@@ -8,3 +8,8 @@ __pycache__
 
 # VENV
 venv
+node_modules
+
+# GENEREATE SDK CLIENT
+src
+openapi.json

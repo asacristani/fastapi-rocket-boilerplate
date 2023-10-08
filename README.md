@@ -59,11 +59,13 @@
 - **Authentication**: OAuth2 with access/refresh tokens.
 - **Admin dashboard**: custom admin dashboard as django by sqladmin.
 - **Reliable**: CI, integrity testing and covered by unit test at 95%.
+- **Frontend friendly**: auto generation of SDK Typescript client.
 
 
 ## ⚙️ Requirements
 - [Python 3.11](https://www.python.org/downloads/release/python-3114/)
 - [Docker](https://docs.docker.com/engine/install/)
+- [Node](https://nodejs.org/en) (only for SDK frontend generation)
 
 
 ## 🎛️  Use
@@ -95,6 +97,11 @@ For admin, use:
 ```shell
 ADMIN_USER=superuser
 ADMIN_PASS=admin
+```
+
+For generating the SDK frontend client (the app should be running):
+```shell
+make generate_sdk
 ```
 
 ### 🧪 Test
@@ -200,7 +207,6 @@ Also, it is possible you want to modify the expiry time of access/refresh tokens
 - Relationship of records into model details (performance)
 
 ### Others
-- TypeScript client
 - Deployment with Kubernetes in Google Cloud by Terraform
 - Add logging
 

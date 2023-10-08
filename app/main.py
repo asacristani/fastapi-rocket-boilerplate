@@ -1,6 +1,7 @@
 import pika
 import redis
 from fastapi import FastAPI
+from fastapi.routing import APIRoute
 from sqladmin import Admin
 from sqlalchemy.exc import OperationalError
 
@@ -13,7 +14,14 @@ from .services.admin.config import admin_models, admin_views
 from .services.user.routes import router as user_router
 from .settings import settings
 
-app = FastAPI()
+
+# SDK CLIENT GENERATION
+def custom_generate_unique_id(route: APIRoute):
+    """Modifier of tags for openapi for improving the sdk client experience"""
+    return f"{route.tags[0]}-{route.name}"
+
+
+app = FastAPI(generate_unique_id_function=custom_generate_unique_id)
 
 # ROUTERS
 routers = [user_router]
@@ -35,7 +43,7 @@ app.add_middleware(NoCacheMiddleware)
 app.add_middleware(DBSessionMiddleware, custom_engine=get_engine())
 
 
-@app.get("/")
+@app.get("/", tags=["general"])
 def read_root():
     return {"msg": "Welcome to the backend core in in FastAPI!"}
 
@@ -48,7 +56,7 @@ def check_db_connection():
         return False
 
 
-@app.get("/check_health")
+@app.get("/check_health", tags=["general"])
 async def check_health():
     """
     Check all the services in the infrastructure are working
