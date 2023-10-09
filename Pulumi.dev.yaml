@@ -1,0 +1,4 @@
+config:
+  fastapi-rocket-boilerplate:nodesPerZone: "1"
+  gcp:project: fastapi-rocket-boilerplate
+  gcp:region: us-central1

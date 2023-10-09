@@ -13,3 +13,6 @@ node_modules
 # GENEREATE SDK CLIENT
 src
 openapi.json
+
+# PULUMI
+*.pyc
