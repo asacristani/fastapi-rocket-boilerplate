@@ -1,53 +1,28 @@
-name: Test
+name: Docker and code quality checks
 
 on: [push, pull_request]
 
 jobs:
-  style:
+  build_and_test:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: 3.11
 
     - name: Install dependencies
-      run: pip install black isort flake8
+      run: pip install .
 
-    - name: Install pre-commit
-      run: pip install pre-commit
+    - name: Install pytest
+      run: pip install pytest pytest-cov pytest-asyncio pytest-mock
+  
+    - name: Run Unit Tests
+      run: pytest -vx --cov=app --cov-report term-missing --cov-fail-under=95
 
-    - name: Run pre-commit hooks
-      run: pre-commit run --all-files
-
-  build-docker:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Build Docker Compose
-        run: make build
-
-  unit-tests:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.11
-
-      - name: Install dependencies
-        run: make install
-
-      - name: Run Unit Tests
-        run: make test
+    - name: Build Docker Compose
+      run: make build
