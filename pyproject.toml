@@ -50,3 +50,19 @@ line-length = 79
 [tool.isort]
 profile = "black"
 line_length = 79
+
+
+[tool.flake8]
+exclude = "venv|.venv|^app/core/db/migrations/|^app/core/middleware/db_session_context.py$"
+max-complexity = 10
+max-line-length = 79
+extend-ignore = """
+    E712,
+    E203,
+    F403,
+    E402,
+    F401,
+"""
+per-file-ignores = """
+    __init__.py: F401
+"""
