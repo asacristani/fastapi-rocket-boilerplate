@@ -79,7 +79,7 @@ and in Google Cloud by Pulumi.
 
 2. Install the requirements with Poetry for developing, testing and debugging purposes.
 
-`make install`
+`make PYTHON=python PIP=pip install`
 
 3. If you want to use the pre-commit with the same style-check that the CI pipeline:
 
