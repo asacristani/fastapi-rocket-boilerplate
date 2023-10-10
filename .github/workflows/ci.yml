@@ -1,9 +1,25 @@
-name: Docker and code quality checks
+name: CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+    - '*'
 
 jobs:
-  build_and_test:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Build Docker Compose
+      run: make build
+
+  unit-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,9 +36,20 @@ jobs:
 
     - name: Install pytest
       run: pip install pytest pytest-cov pytest-asyncio pytest-mock
-  
-    - name: Run Unit Tests
-      run: pytest -vx --cov=app --cov-report term-missing --cov-fail-under=95
 
-    - name: Build Docker Compose
-      run: make build
+    - name: Run Unit Tests
+      run: make test
+
+
+  style:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install pre-commit
+      run: pip install pre-commit
+
+    - name: Run pre-commit hooks
+      run: pre-commit run --all-files
