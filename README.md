@@ -76,21 +76,32 @@ and in Google Cloud by Pulumi.
 ### 🔧 Installation
 1. Clone the repo
 
+2. Create a virtual environment:
 
-2. Install the requirements with Poetry for developing, testing and debugging purposes.
+```shell
+python3.11 -m venv venv
+```
 
-`make install`
+3. Install the requirements with Poetry for developing, testing and debugging purposes.
 
-3. If you want to use the pre-commit with the same style-check that the CI pipeline:
+```shell
+make install
+```
 
-`pre-commit install`
+4. If you want to use the pre-commit with the same style-check that the CI pipeline:
+
+```
+pre-commit install
+```
 
 >ℹ️ You can test the pre-commit without committing running `pre-commit run --all-files`
 
 ### 🔌 Build and run
 Build and run the Docker services for using in Local.
 
-`make run`
+```shell
+make run
+```
 
 Congrats! the API is working at this point, you can check:
 - Docs: http://localhost:8000/docs
@@ -111,7 +122,9 @@ make generate_sdk
 ### 🧪 Test
 Run pytest with coverage for unit testing.
 
-`make test`
+```shell
+make test
+```
 
 You do not need to run inside Docker container.
 
