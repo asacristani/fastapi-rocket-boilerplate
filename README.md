@@ -85,7 +85,7 @@ and in Google Cloud by Pulumi.
 
 `pre-commit install`
 
->ℹ️ You can test the pre-commit without comiting running `pre-commit run --all-files`
+>ℹ️ You can test the pre-commit without committing running `pre-commit run --all-files`
 
 ### 🔌 Build and run
 Build and run the Docker services for using in Local.
