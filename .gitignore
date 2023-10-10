@@ -159,9 +159,10 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 .idea/
 
-# GENEREATE SDK CLIENT
-src
+# SDK client
+node_modules/
+src/
 openapi.json
 
-# PULUMI
+# Pulumi
 *.pyc
