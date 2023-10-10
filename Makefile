@@ -13,7 +13,7 @@ up:
 	docker-compose up
 
 test:
-	poetry run pytest -vx --cov=app --cov-report term-missing --cov-fail-under=95
+	pytest -vx --cov=app --cov-report term-missing --cov-fail-under=95
 
 data_test:
 	echo wip
