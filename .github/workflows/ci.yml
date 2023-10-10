@@ -9,7 +9,17 @@ on:
     - '*'
 
 jobs:
-  build_and_test:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Build Docker Compose
+      run: make build
+
+  unit-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,9 +36,28 @@ jobs:
 
     - name: Install pytest
       run: pip install pytest pytest-cov pytest-asyncio pytest-mock
-  
+
     - name: Run Unit Tests
       run: make test
 
-    - name: Build Docker Compose
-      run: make build
+
+  style:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.11
+
+    - name: Install dependencies
+      run: pip install black isort flake8
+
+    - name: Install pre-commit
+      run: pip install pre-commit
+
+    - name: Run pre-commit hooks
+      run: pre-commit run --all-files
