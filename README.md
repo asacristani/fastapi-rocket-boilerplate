@@ -62,7 +62,7 @@ and in Google Cloud by Pulumi.
 - **ORM**: custom sqlmodel orm as django orm and mongoengine.
 - **Authentication**: OAuth2 with access/refresh tokens.
 - **Admin dashboard**: custom admin dashboard as django by sqladmin.
-- **Reliable**: CI, integrity testing and covered by unit test at 95%.
+- **Rock-Solid Reliability**: CI, pre-commit, integrity testing and covered by unit test at +95%.
 - **Frontend friendly**: auto generation of SDK Typescript client.
 
 

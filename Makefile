@@ -25,5 +25,6 @@ format:
 	black .
 
 generate_sdk:
+	npm install
 	python sdk_client_script.py
 	npm run generate-client
