@@ -48,14 +48,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: 3.11
-
-    - name: Install dependencies
-      run: pip install black isort flake8
-
     - name: Install pre-commit
       run: pip install pre-commit
 
