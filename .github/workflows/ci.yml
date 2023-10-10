@@ -1,4 +1,4 @@
-name: Docker and code quality checks
+name: CI
 
 on: [push, pull_request]
 
@@ -22,7 +22,7 @@ jobs:
       run: pip install pytest pytest-cov pytest-asyncio pytest-mock
   
     - name: Run Unit Tests
-      run: pytest -vx --cov=app --cov-report term-missing --cov-fail-under=95
+      run: make test
 
     - name: Build Docker Compose
       run: make build
