@@ -238,9 +238,10 @@ pulumi up
 
 ## 🔮 Future features
 
-### Deployment
-- [x] Deployment with Kubernetes in Google Cloud by Pulumi
-- [ ] Deployment with Kubernetes in AWS by Pulumi
+### Deployment (with Pulumi)
+- [x] Deployment with Kubernetes in Google Cloud
+- [ ] Deployment with Kubernetes in AWS
+- [ ] Deployment with Kubernetes in Azure
 
 ### Monitoring
 - [ ] Add logging
