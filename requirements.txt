@@ -1,0 +1,16 @@
+alembic==1.12.0
+fastapi==0.103.2
+jose==1.0.0
+passlib==1.7.4
+pika==1.3.2
+pulumi==3.88.0
+pulumi_gcp==6.67.0
+pulumi_kubernetes==4.3.0
+pydantic==1.10.7
+pytest==7.4.2
+redis==5.0.1
+Requests==2.31.0
+sqladmin==0.15.1
+SQLAlchemy==2.0.21
+sqlmodel==0.0.8
+starlette==0.31.1
