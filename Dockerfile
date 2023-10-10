@@ -4,8 +4,7 @@ WORKDIR /app
 
 COPY . /app
 
-RUN pip install --no-cache-dir poetry
-RUN poetry config virtualenvs.create false && poetry install
+RUN pip install .
 
 # Port
 EXPOSE 8000
