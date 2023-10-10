@@ -1,5 +1,9 @@
+# Define variables for Python and pip executables
+PYTHON ?= python3
+PIP ?= pip3
+
 install:
-	pip install poetry && \
+	$(PIP) install poetry && \
 	poetry install
 
 run:
@@ -16,7 +20,7 @@ test:
 	poetry run pytest -vx --cov=app --cov-report term-missing --cov-fail-under=95
 
 data_test:
-	echo wip
+	@echo wip
 
 alembic_downgrade:
 	docker-compose run app alembic downgrade base
@@ -25,5 +29,5 @@ format:
 	black .
 
 generate_sdk:
-	python sdk_client_script.py
+	$(PYTHON) sdk_client_script.py
 	npm run generate-client
