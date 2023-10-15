@@ -3,6 +3,7 @@ from unittest import TestCase
 import pytest
 
 from app.services.user.models import RevokedToken
+from fastapi import status
 
 
 class TestUserRoutes(TestCase):
@@ -23,7 +24,7 @@ class TestUserRoutes(TestCase):
             },
         )
 
-        assert 201 == response.status_code
+        assert response.status_code == status.HTTP_201_CREATED
 
         # Register the same user
         response = self.app.post(
@@ -34,7 +35,7 @@ class TestUserRoutes(TestCase):
             },
         )
 
-        assert 400 == response.status_code
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_login(self):
         # Login ok
@@ -46,7 +47,7 @@ class TestUserRoutes(TestCase):
             },
         )
 
-        assert 200 == response.status_code
+        assert response.status_code == status.HTTP_200_OK
 
         # Login ko
         response = self.app.post(
@@ -57,7 +58,7 @@ class TestUserRoutes(TestCase):
             },
         )
 
-        assert 400 == response.status_code
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_refresh_token(self):
         # Login
@@ -83,7 +84,7 @@ class TestUserRoutes(TestCase):
         )
 
         assert "access_token" in response.json()
-        assert 200 == response.status_code
+        assert response.status_code == status.HTTP_200_OK
 
         # Refresh token ko
         response = self.app.post(
@@ -93,7 +94,7 @@ class TestUserRoutes(TestCase):
             },
         )
 
-        assert 400 == response.status_code
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_logout_and_protected(self):
         # Access to protected
@@ -107,7 +108,7 @@ class TestUserRoutes(TestCase):
             },
         )
 
-        assert 200 == response.status_code
+        assert response.status_code == status.HTTP_200_OK
 
         # Login again
         response = self.app.post(
@@ -118,7 +119,7 @@ class TestUserRoutes(TestCase):
             },
         )
 
-        assert 200 == response.status_code
+        assert response.status_code == status.HTTP_200_OK
         refresh_token = response.json()["refresh_token"]
 
         # Logout and access to protected
@@ -126,7 +127,7 @@ class TestUserRoutes(TestCase):
             url="user/logout", json={"refresh_token": refresh_token}
         )
 
-        assert 200 == response.status_code
+        assert response.status_code == status.HTTP_200_OK
 
         # Refresh revoked token
         response = self.app.post(
@@ -136,11 +137,11 @@ class TestUserRoutes(TestCase):
             },
         )
 
-        assert 400 == response.status_code
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
 
         # Access to protected without valid token
         response = self.app.get(
             url="user/protected",
         )
 
-        assert 401 == response.status_code
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
