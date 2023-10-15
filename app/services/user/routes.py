@@ -19,7 +19,7 @@ router = APIRouter(prefix="/user", tags=["user"])
     "/register",
     responses={
         **responses_content["UserSuccessfullyRegistered"],
-        **responses_content["UserAlreadyRegistered"]
+        **responses_content["UserAlreadyRegistered"],
     },
     status_code=status.HTTP_201_CREATED,
 )
@@ -47,9 +47,7 @@ def register_user(user: UserRegistration, response: Response):
 @router.post(
     "/login",
     response_model=Tokens,
-    responses={
-        **responses_content["LoginInvalidCredentials"]
-    },
+    responses={**responses_content["LoginInvalidCredentials"]},
 )
 def login_user(form_data: OAuth2PasswordRequestForm = Depends()):
     """
@@ -71,9 +69,7 @@ def login_user(form_data: OAuth2PasswordRequestForm = Depends()):
 @router.post(
     "/refresh-token",
     response_model=TokenRefreshed,
-    responses={
-        **responses_content["TokenUnauthorizedOrRevoked"]
-    },
+    responses={**responses_content["TokenUnauthorizedOrRevoked"]},
 )
 def refresh_token(refresh_token: RefreshToken):
     """
@@ -97,9 +93,7 @@ def refresh_token(refresh_token: RefreshToken):
 
 @router.post(
     "/logout",
-    responses={
-        **responses_content["TokenSuccessfullyRevoked"]
-    },
+    responses={**responses_content["TokenSuccessfullyRevoked"]},
 )
 def logout(refresh_token: RefreshToken):
     """
@@ -126,9 +120,7 @@ def logout(refresh_token: RefreshToken):
 
 @router.get(
     "/protected",
-    responses={
-        **responses_content["ProtectedRouteAccess"]
-    },
+    responses={**responses_content["ProtectedRouteAccess"]},
 )
 def protected_route(current_user: str = Depends(get_current_user)):
     """Endpoint for auth test"""

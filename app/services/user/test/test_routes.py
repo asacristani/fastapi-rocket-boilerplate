@@ -1,9 +1,9 @@
 from unittest import TestCase
 
 import pytest
+from fastapi import status
 
 from app.services.user.models import RevokedToken
-from fastapi import status
 
 
 class TestUserRoutes(TestCase):
