@@ -9,6 +9,7 @@ from app.core.auth.functions import (
 )
 
 from .models import RevokedToken, User
+from .responses import responses_content
 from .schemas import RefreshToken, TokenRefreshed, Tokens, UserRegistration
 
 router = APIRouter(prefix="/user", tags=["user"])
@@ -17,22 +18,8 @@ router = APIRouter(prefix="/user", tags=["user"])
 @router.post(
     "/register",
     responses={
-        status.HTTP_201_CREATED: {
-            "description": "User successfully registered",
-            "content": {
-                "application/json": {
-                    "example": "User 'anyemail@anyprovider.com' created"
-                }
-            },
-        },
-        status.HTTP_400_BAD_REQUEST: {
-            "description": "User already registered",
-            "content": {
-                "application/json": {
-                    "example": "This user is already registered"
-                }
-            },
-        },
+        **responses_content["UserSuccessfullyRegistered"],
+        **responses_content["UserAlreadyRegistered"]
     },
     status_code=status.HTTP_201_CREATED,
 )
@@ -61,12 +48,7 @@ def register_user(user: UserRegistration, response: Response):
     "/login",
     response_model=Tokens,
     responses={
-        status.HTTP_400_BAD_REQUEST: {
-            "description": "Invalid credentials",
-            "content": {
-                "application/json": {"example": "Invalid credentials"}
-            },
-        },
+        **responses_content["LoginInvalidCredentials"]
     },
 )
 def login_user(form_data: OAuth2PasswordRequestForm = Depends()):
@@ -90,10 +72,7 @@ def login_user(form_data: OAuth2PasswordRequestForm = Depends()):
     "/refresh-token",
     response_model=TokenRefreshed,
     responses={
-        status.HTTP_400_BAD_REQUEST: {
-            "description": "Unauthorized or revoked token",
-            "content": {"application/json": {"example": "Not authorized"}},
-        },
+        **responses_content["TokenUnauthorizedOrRevoked"]
     },
 )
 def refresh_token(refresh_token: RefreshToken):
@@ -116,7 +95,12 @@ def refresh_token(refresh_token: RefreshToken):
     return TokenRefreshed(access_token=access_token, token_type="bearer")
 
 
-@router.post("/logout")
+@router.post(
+    "/logout",
+    responses={
+        **responses_content["TokenSuccessfullyRevoked"]
+    },
+)
 def logout(refresh_token: RefreshToken):
     """
     Revoke refresh token
@@ -140,7 +124,12 @@ def logout(refresh_token: RefreshToken):
     return {"message": "Refresh token successfully revoked"}
 
 
-@router.get("/protected")
+@router.get(
+    "/protected",
+    responses={
+        **responses_content["ProtectedRouteAccess"]
+    },
+)
 def protected_route(current_user: str = Depends(get_current_user)):
     """Endpoint for auth test"""
     return {
