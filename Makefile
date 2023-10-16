@@ -1,5 +1,5 @@
 install:
-	pip install poetry && \
+	pip3 install poetry && \
 	poetry install
 
 run:
