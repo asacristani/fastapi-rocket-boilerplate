@@ -43,7 +43,7 @@
   <a href="https://www.docker.com/">
       <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
   </a>
-  <a href="https://www.docker.com/">
+  <a href="https://www.pulumi.com/">
       <img src="https://img.shields.io/badge/Pulumi-8A3391?style=for-the-badge&logo=pulumi&logoColor=white" alt="Pulumi">
   </a>
 </p>
