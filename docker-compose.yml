@@ -35,6 +35,16 @@ services:
       - redis
       - rabbitmq
 
+  flower:
+    build: .
+    command: celery -A app.core.celery flower
+    depends_on:
+      - redis
+      - rabbitmq
+      - celery
+    ports:
+      - "5555:5555"
+
   redis:
     image: "redis:latest"
     ports:
