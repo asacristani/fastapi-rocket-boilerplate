@@ -260,7 +260,7 @@ pulumi up
 ### Monitoring
 - [ ] Add logging
 - [ ] Add Sentry
-- [ ] Add Flower
+- [x] Add Flower
 
 ### Testing
 - [ ] Integrity tests
