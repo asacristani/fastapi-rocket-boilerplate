@@ -272,7 +272,7 @@ pulumi up
 
 ### Monitoring
 - [ ] Add logging
-- [ ] Add Sentry
+- [x] Add Sentry
 - [ ] Add Flower
 
 ### Testing
