@@ -259,6 +259,8 @@ Also, it is possible you want to modify the expiry time of access/refresh tokens
 ### Monitoring
 
 - [ ] Add logging
+- [x] Add Sentry
+- [ ] Add Flower
 
 ### Testing
 
