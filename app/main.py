@@ -1,5 +1,6 @@
 import pika
 import redis
+import sentry_sdk
 from fastapi import FastAPI
 from fastapi.routing import APIRoute
 from sqladmin import Admin
@@ -20,6 +21,12 @@ def custom_generate_unique_id(route: APIRoute):
     """Modifier of tags for openapi for improving the sdk client experience"""
     return f"{route.tags[0]}-{route.name}"
 
+
+# Sentry Integration
+sentry_sdk.init(
+    dsn=settings.sentry_dsn,
+    traces_sample_rate=settings.trace_rate,
+)
 
 app = FastAPI(generate_unique_id_function=custom_generate_unique_id)
 
