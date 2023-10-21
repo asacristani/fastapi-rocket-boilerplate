@@ -107,6 +107,7 @@ Congrats! the API is working at this point, you can check:
 - Docs: http://localhost:8000/docs
 - Admin: http://localhost:8000/admin
 - RabbitMQ: http://localhost:15672/
+- Celery Flower: http://localhost:5555/
 
 For admin, use:
 ```shell
@@ -259,7 +260,7 @@ pulumi up
 ### Monitoring
 - [ ] Add logging
 - [ ] Add Sentry
-- [ ] Add Flower
+- [x] Add Flower
 
 ### Testing
 - [ ] Integrity tests
