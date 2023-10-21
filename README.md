@@ -93,6 +93,20 @@ If you are using VS Code, I recommend you to install some plugins:
 
 > ℹ️ You can test the pre-commit without committing running `trunk check`
 
+
+### Sentry Integration
+
+To integrate Sentry for error monitoring, add the Sentry DSN (Data Source Name) to the `.env` file. Set up your environment by signing in to [Sentry](https://sentry.io/welcome/) to create a project and obtain the Sentry DSN.
+
+In the `.env` file, include the following variable:
+
+```
+SENTRY_DSN=your_sentry_dsn_here
+```
+
+> With this configuration, errors will be captured and reported to your Sentry project for effective monitoring.
+
+
 ### 🔌 Build and run
 
 Build and run the Docker services for using in Locaql.
