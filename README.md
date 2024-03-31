@@ -238,3 +238,4 @@ Also, it is possible you want to modify the expiry time of access/refresh tokens
 - [ ] Search events by model AND id
 - [ ] Fix popup for reverse_delete
 - [ ] Relationship of records into model details (performance)
+- [ ] Fix export CSV
