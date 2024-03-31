@@ -43,9 +43,6 @@
   <a href="https://www.docker.com/">
       <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
   </a>
-  <a href="https://www.pulumi.com/">
-      <img src="https://img.shields.io/badge/Pulumi-8A3391?style=for-the-badge&logo=pulumi&logoColor=white" alt="Pulumi">
-  </a>
 </p>
 
 <p align="center"> Also sqlmodel, pydantic, alembic, poetry, ...</p>
@@ -54,8 +51,7 @@
 
 ## 🧩 Features
 
-- **Infrastructure**: the common services that every backend needs, served in local by Docker Compose
-and in Google Cloud by Pulumi.
+- **Infrastructure**: the common services that every backend needs, served in local by Docker Compose.
 - **Easy**: all the commands ready by Makefile.
 - **Fast**: thanks to Fastapi and async programming.
 - **Async**: Celery using RabbitMQ as broker and Redis as backend.
@@ -70,7 +66,6 @@ and in Google Cloud by Pulumi.
 - [Python 3.11](https://www.python.org/downloads/release/python-3114/)
 - [Docker](https://docs.docker.com/engine/install/)
 - [Node](https://nodejs.org/en) only for SDK frontend generation
-- [Pulumi](https://www.pulumi.com/) only for deploying
 
 ## 🎛️  Use
 ### 🔧 Installation
@@ -217,54 +212,19 @@ You should change the next env vars in `.env`:
 
 Also, it is possible you want to modify the expiry time of access/refresh tokens.
 
-## 🚀 Deploy
-We use Pulumi for deploying.
-
-
-### Google Cloud
-The DB will be deployed in GCP SQL service.
-
-The rest of the services will be deployed in GCP GKE.
-
-1. Log in Google cloud
-```shell
-gcloud auth application-default login
-```
-2. Create a new project in Google console
-3. Set the project in gcloud
-```shell
-gcloud config set project <YOUR_GCP_PROJECT_ID>
-```
-To find it, you can run:
-```shell
-gcloud projects list 
-```
-4. Modify `Pulumi-dev.yaml` with your GCP project and region.
-5. Modify the begging of `__main__.py` with your variables
-6. run:
-```
-pulumi up
-```
-
-✅ It is done, your project is alive!
-
 
 ## 🔮 Future features
-
-### Deployment (with Pulumi)
-- [x] Deployment with Kubernetes in Google Cloud
-- [ ] Deployment with Kubernetes in AWS
-- [ ] Deployment with Kubernetes in Azure
+### Refactor
+- [ ] Organise better the root files
+- [ ] Remove Celery and RabbitMQ (I want to do it simple, allowing the user to choose other options)
 
 ### Monitoring
 - [ ] Add logging
-- [ ] Add Sentry
-- [ ] Add Flower
 
 ### Testing
 - [ ] Integrity tests
 - [ ] Cover 100% with unit-testing
-- [ ] Add mypy and pylint to the Pre-commit
+- [ ] Use a complete quality check for the code and pre-commit
 
 ### Async
 - [ ] Use 100% async/await for routes and database connections
