@@ -224,6 +224,8 @@ Also, it is possible you want to modify the expiry time of access/refresh tokens
 ### Testing
 - [ ] Integrity tests
 - [ ] Cover 100% with unit-testing
+
+### Quality code
 - [ ] Use a complete quality check for the code and pre-commit
 
 ### Async
