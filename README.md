@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://lh3.googleusercontent.com/d/1ybx89iD_4jebLFgYqNAK4HxQOrniWj3y=s220?authuser=0">
+  <img src="https://lh3.googleusercontent.com/d/1OtbWq1JUZEngs_q-qgv_ZnIbvuVSsN8M=s220?authuser=0">
 </p>
 <p align="center">
   <a href="https://github.com/AdrianPayne/fastapi-core/actions/workflows/ci.yml" target="_blank">
