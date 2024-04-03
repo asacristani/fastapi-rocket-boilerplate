@@ -114,6 +114,8 @@ For generating the SDK frontend client (the app should be running):
 make generate_sdk
 ```
 
+You will find the generated client in `generate_client/openapi.json`
+
 ### 🧪 Test
 Run pytest with coverage for unit testing.
 
@@ -215,7 +217,7 @@ Also, it is possible you want to modify the expiry time of access/refresh tokens
 
 ## 🔮 Future features
 ### Refactor
-- [ ] Organise better the root files
+- [x] Organise better the root files
 - [ ] Remove Celery and RabbitMQ (I want to do it simple, allowing the user to choose other options)
 
 ### Monitoring

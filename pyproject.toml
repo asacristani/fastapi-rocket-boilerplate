@@ -69,3 +69,10 @@ extend-ignore = """
 per-file-ignores = """
     __init__.py: F401
 """
+
+[tool.coverage.run]
+omit = [
+    "conftest.py", 
+    "*/test/*",
+    "*/migrations/*"
+    ]

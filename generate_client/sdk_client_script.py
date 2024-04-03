@@ -4,7 +4,10 @@ from pathlib import Path
 import requests
 
 url = "http://localhost:8000/openapi.json"
-destination_file = "openapi.json"
+script_dir = Path(__file__).parent.absolute()
+destination_file = script_dir / "openapi.json"
+print("HOLA")
+print(destination_file)
 response = requests.get(url)
 
 if response.status_code == 200:
@@ -15,7 +18,7 @@ else:
         f"Error downloading the file. Response code: {response.status_code}"
     )
 
-file_path = Path("./openapi.json")
+file_path = Path(destination_file)
 openapi_content = json.loads(file_path.read_text())
 
 for path_data in openapi_content["paths"].values():
