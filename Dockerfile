@@ -2,11 +2,21 @@ FROM python:3.11
 
 WORKDIR /app
 
+# Crea un usuario no-root 'appuser' y cambia a este usuario
+RUN useradd --create-home appuser
+USER appuser
+
 COPY . /app
 
-RUN pip install .
+# Instala dependencias con buenas prácticas
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Port
 EXPOSE 8000
 
-CMD ./entrypoint.sh
+# Health Check
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+  CMD [ "curl", "-f", "http://localhost:8000/check_health" ]
+
+# CMD con notación JSON
+CMD ["./entrypoint.sh"]
