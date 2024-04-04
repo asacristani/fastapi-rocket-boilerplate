@@ -58,14 +58,14 @@
 - **ORM**: custom sqlmodel orm as django orm and mongoengine.
 - **Authentication**: OAuth2 with access/refresh tokens.
 - **Admin dashboard**: custom admin dashboard as django by sqladmin.
-- **Rock-Solid Reliability**: CI, pre-commit, integrity testing and covered by unit test at +95%.
+- **Rock-Solid Reliability**: CI and pre-commit by Trunk. Integrity testing and covered by unit test at +95%.
 - **Frontend friendly**: auto generation of SDK Typescript client.
 
 ## ⚙️ Requirements
 
 - [Python 3.11](https://www.python.org/downloads/release/python-3114/)
 - [Docker](https://docs.docker.com/engine/install/)
-- [Node](https://nodejs.org/en) only for SDK frontend generation
+- [Node](https://nodejs.org/en) for SDK frontend generation and Trunk (pre commit) installation
 
 ## 🎛️ Use
 
@@ -79,23 +79,23 @@
 python3.11 -m venv venv
 ```
 
-3. Install the requirements with Poetry for developing, testing and debugging purposes.
+3. Install the requirements with Poetry for developing, testing and debugging purposes. Also install Trunk for pre-commit and code quality.
 
 ```shell
 make install
 ```
 
-4. If you want to use the pre-commit with the same style-check that the CI pipeline:
+#### VS Code
 
-```
-pre-commit install
-```
+If you are using VS Code, I recommend you to install some plugins:
 
-> ℹ️ You can test the pre-commit without committing running `pre-commit run --all-files`
+- Trunk: for improving the quality code.
+
+> ℹ️ You can test the pre-commit without committing running `trunk check`
 
 ### 🔌 Build and run
 
-Build and run the Docker services for using in Local.
+Build and run the Docker services for using in Locaql.
 
 ```shell
 make run
