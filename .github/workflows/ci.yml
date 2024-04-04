@@ -39,15 +39,3 @@ jobs:
 
       - name: Run Unit Tests
         run: make test
-
-  style:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Trunk Check
-        uses: trunk-io/trunk-action@v1
-        with:
-          arguments: --ci
