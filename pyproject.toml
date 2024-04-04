@@ -4,25 +4,25 @@ version = "0.1.0"
 description = "FastAPI Rocket Boilerplate to build an API based in Python with its most modern technologies!"
 authors = ["adrian.sacristan <adriansacristan1993@gmail.com>"]
 readme = "README.md"
-packages = [{include = "app"}]
+packages = [{ include = "app" }]
 
 [tool.poetry.dependencies]
 python = "^3.11"
 fastapi = "^0.110.1"
 uvicorn = "^0.23.1"
 psycopg2 = "^2.9.6"
-passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+passlib = { extras = ["bcrypt"], version = "^1.7.4" }
 python-jose = "^3.3.0"
 python-multipart = "^0.0.6"
 sqladmin = "^0.14.0"
 itsdangerous = "^2.1.2"
-pydantic = {version = "1.10.12", extras = ["dotenv", "email"]}
+pydantic = { version = "1.10.12", extras = ["dotenv", "email"] }
 alembic = "^1.11.2"
 asyncpg = "^0.28.0"
 sqlmodel = "^0.0.8"
 httpx = "^0.24.1"
 asyncio = "^3.4.3"
-celery = {extras = ["redis"], version = "^5.3.4"}
+celery = { extras = ["redis"], version = "^5.3.4" }
 pytz = "^2023.3.post1"
 pika = "^1.3.2"
 pulumi = "^3.87.0"
@@ -71,8 +71,4 @@ per-file-ignores = """
 """
 
 [tool.coverage.run]
-omit = [
-    "conftest.py", 
-    "*/test/*",
-    "*/migrations/*"
-    ]
+omit = ["conftest.py", "*/test/*", "*/migrations/*"]

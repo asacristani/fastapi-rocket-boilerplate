@@ -3,54 +3,52 @@ name: CI
 on:
   push:
     branches:
-    - main
+      - main
   pull_request:
     branches:
-    - '*'
+      - "*"
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Build Docker Compose
-      run: make build
-
+      - name: Build Docker Compose
+        run: make build
 
   unit-test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: 3.11
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
 
-    - name: Install dependencies
-      run: pip install .
+      - name: Install dependencies
+        run: pip install .
 
-    - name: Install pytest
-      run: pip install pytest pytest-cov pytest-asyncio pytest-mock
+      - name: Install pytest
+        run: pip install pytest pytest-cov pytest-asyncio pytest-mock
 
-    - name: Run Unit Tests
-      run: make test
-
+      - name: Run Unit Tests
+        run: make test
 
   style:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Install pre-commit
-      run: pip install pre-commit
+      - name: Install pre-commit
+        run: pip install pre-commit
 
-    - name: Run pre-commit hooks
-      run: pre-commit run --all-files
+      - name: Run pre-commit hooks
+        run: pre-commit run --all-files

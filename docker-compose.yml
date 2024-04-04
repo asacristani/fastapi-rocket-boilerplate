@@ -9,7 +9,6 @@ services:
     volumes:
       - db:/var/lib/postgresql/data
 
-
   app:
     build:
       context: .
