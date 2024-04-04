@@ -254,7 +254,7 @@ Also, it is possible you want to modify the expiry time of access/refresh tokens
 
 ### Quality code
 
-- [ ] Use a complete quality check for the code and pre-commit
+- [x] Use a complete quality check for the code and pre-commit
 
 ### Async
 
