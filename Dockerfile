@@ -9,7 +9,7 @@ USER appuser
 COPY . /app
 
 # Instala dependencias con buenas prácticas
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir .
 
 # Port
 EXPOSE 8000
