@@ -1,6 +1,9 @@
 install:
+	# Requirements 
 	pip install poetry && \
 	poetry install
+	# pre-commit
+	curl https://get.trunk.io -fsSL | bash
 
 run:
 	docker-compose build && \

@@ -61,10 +61,10 @@ def get_current_user(token: str = Depends(oauth2_scheme)) -> str:
         if username is None:
             raise HTTPException(status_code=401, detail="No autorizado")
         return username
-    except jwt.ExpiredSignatureError:
-        raise HTTPException(status_code=401, detail="Token expirado")
-    except jwt.JWTError:
-        raise HTTPException(status_code=401, detail="Token invalid")
+    except jwt.ExpiredSignatureError as err:
+        raise HTTPException(status_code=401, detail="Token expirado") from err
+    except jwt.JWTError as err:
+        raise HTTPException(status_code=401, detail="Token invalid") from err
 
 
 def verify_refresh_token(token: str) -> dict | None:
