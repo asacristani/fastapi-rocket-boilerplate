@@ -19,6 +19,8 @@ runtimes:
 lint:
   disabled:
   enabled:
+    - pylint@3.1.0
+    - mypy@1.9.0
     - osv-scanner@1.7.0
     - actionlint@1.6.27
     - bandit@1.7.8

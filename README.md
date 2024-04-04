@@ -241,7 +241,6 @@ Also, it is possible you want to modify the expiry time of access/refresh tokens
 ### Refactor
 
 - [x] Organise better the root files
-- [ ] Remove Celery and RabbitMQ (I want to do it simple, allowing the user to choose other options)
 
 ### Monitoring
 
@@ -250,7 +249,7 @@ Also, it is possible you want to modify the expiry time of access/refresh tokens
 ### Testing
 
 - [ ] Integrity tests
-- [ ] Cover 100% with unit-testing
+- [x] Cover 100% with unit-testing
 
 ### Quality code
 
