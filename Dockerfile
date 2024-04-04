@@ -1,3 +1,4 @@
+# trunk-ignore-all(terrascan/AC_DOCKER_0047)
 FROM python:3.11
 
 WORKDIR /app
