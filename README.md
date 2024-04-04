@@ -6,7 +6,7 @@
       <img src="https://github.com/AdrianPayne/fastapi-core/actions/workflows/ci.yml/badge.svg" alt="Test">
   </a>
   <a href="https://www.python.org/downloads/release/python-3110/" target="_blank">
-      <img src="https://img.shields.io/badge/Coverage-96.26%25-%2347C21F?logo=github" alt="Coverage">
+      <img src="https://img.shields.io/badge/Coverage-100%25-%2347C21F?logo=github" alt="Coverage">
   </a>
   <a href="https://www.python.org/downloads/release/python-3110/" target="_blank">
       <img src="https://img.shields.io/badge/Python-3.11-blue?logo=python" alt="Python 3.11">
