@@ -65,7 +65,7 @@
 
 - [Python 3.11](https://www.python.org/downloads/release/python-3114/)
 - [Docker](https://docs.docker.com/engine/install/)
-- [Node](https://nodejs.org/en) for SDK frontend generation and Trunk (pre commit) installation
+- [Node](https://nodejs.org/en) for SDK frontend generation
 
 ## 🎛️ Use
 

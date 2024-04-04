@@ -3,7 +3,7 @@ install:
 	pip install poetry && \
 	poetry install
 	# pre-commit
-	npm install -D @trunkio/launcher
+	curl https://get.trunk.io -fsSL | bash
 
 run:
 	docker-compose build && \
