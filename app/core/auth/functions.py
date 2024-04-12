@@ -7,15 +7,12 @@ from jose import jwt
 
 from app.settings import settings
 
-# pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
 
 def hash_password(password: str) -> str:
     pwd_bytes = password.encode("utf-8")
     salt = bcrypt.gensalt()
     hashed_password = bcrypt.hashpw(password=pwd_bytes, salt=salt)
     return hashed_password
-    # return pwd_context.hash(password)
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
@@ -24,7 +21,6 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
         password=password_byte_enc,
         hashed_password=hashed_password.encode("utf-8"),
     )
-    # return pwd_context.verify(plain_password, hashed_password)
 
 
 def create_jwt_token(data: dict, expiration_delta: timedelta) -> str:
