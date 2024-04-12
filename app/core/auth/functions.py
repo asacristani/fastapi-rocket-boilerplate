@@ -15,11 +15,16 @@ def hash_password(password: str) -> str:
     return hashed_password
 
 
-def verify_password(plain_password: str, hashed_password: str) -> bool:
+def verify_password(plain_password: str, hashed_password: str | bytes) -> bool:
     password_byte_enc = plain_password.encode("utf-8")
+    hashed_password = (
+        hashed_password
+        if type(hashed_password) is bytes
+        else hashed_password.encode("utf-8")
+    )
     return bcrypt.checkpw(
         password=password_byte_enc,
-        hashed_password=hashed_password.encode("utf-8"),
+        hashed_password=hashed_password,
     )
 
 
