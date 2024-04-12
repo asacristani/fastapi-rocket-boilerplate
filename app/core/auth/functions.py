@@ -8,7 +8,7 @@ from jose import jwt
 from app.settings import settings
 
 
-def hash_password(password: str) -> str:
+def hash_password(password: str) -> bytes:
     pwd_bytes = password.encode("utf-8")
     salt = bcrypt.gensalt()
     hashed_password = bcrypt.hashpw(password=pwd_bytes, salt=salt)
@@ -18,9 +18,9 @@ def hash_password(password: str) -> str:
 def verify_password(plain_password: str, hashed_password: str | bytes) -> bool:
     password_byte_enc = plain_password.encode("utf-8")
     hashed_password = (
-        hashed_password
-        if isinstance(hashed_password, bytes)
-        else hashed_password.encode("utf-8")
+        hashed_password.encode("utf-8")
+        if isinstance(hashed_password, str)
+        else hashed_password
     )
     return bcrypt.checkpw(
         password=password_byte_enc,
