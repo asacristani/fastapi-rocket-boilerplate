@@ -1,6 +1,5 @@
 install:
-	# Requirements 
-	pip install poetry && \
+	pip3 install poetry && \
 	poetry install
 	# pre-commit
 	curl https://get.trunk.io -fsSL | bash
