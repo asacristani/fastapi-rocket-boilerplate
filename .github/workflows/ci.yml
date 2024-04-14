@@ -36,7 +36,7 @@ jobs:
         run: pip install .
 
       - name: Install pytest
-        run: pip install pytest pytest-cov pytest-asyncio pytest-mock
+        run: pip install pytest pytest-cov pytest-asyncio pytest-mock pytest-alembic "pytest-mock-resources[docker]==2.10.2"
 
       - name: Run Unit Tests
         run: make test

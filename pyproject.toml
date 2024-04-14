@@ -38,6 +38,8 @@ mypy = "^1.5.1"
 build = "^1.0.3"
 wheel = "^0.41.2"
 twine = "^4.0.2"
+pytest-alembic = "^0.11.0"
+pytest-mock-resources = { extras = ["docker"], version = "^2.10.2" }
 
 
 [build-system]
