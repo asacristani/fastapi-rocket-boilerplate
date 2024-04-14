@@ -45,7 +45,7 @@ app.add_middleware(DBSessionMiddleware, custom_engine=get_engine())
 
 @app.get("/", tags=["general"])
 def read_root():
-    return {"msg": "Welcome to the backend core in in FastAPI!"}
+    return {"msg": "Welcome to the backend core in FastAPI!"}
 
 
 def check_db_connection():

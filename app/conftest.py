@@ -2,10 +2,34 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 from fastapi.testclient import TestClient
+from pytest_alembic.config import Config
+from pytest_mock_resources import create_postgres_fixture
 from sqlmodel import SQLModel, create_engine
 from sqlmodel.pool import StaticPool
 
 from app.core.db.session import DBSessionMiddleware, db
+
+
+@pytest.fixture
+def alembic_config():
+    """Override this fixture to configure the exact
+    alembic context setup required."""
+    migration_path = "app/core/db/migrations/"
+    return Config(
+        config_options={
+            "file": migration_path + "alembic.ini",
+            "script_location": migration_path,
+        }
+    )
+
+
+# Configuration of pytest mock postgres fixtures
+# @pytest.fixture(scope="session")
+# def pmr_postgres_config():
+#     return PostgresConfig(image="postgres:16")
+
+
+alembic_engine = create_postgres_fixture()
 
 engine = create_engine(
     "sqlite://",

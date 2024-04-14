@@ -1,21 +1,20 @@
 version: "3.9"
 services:
   db:
-    image: postgres:latest
+    image: postgres:16
     ports:
-      - "5432:5432"
+      - 5432:5432
     env_file:
       - .env
     volumes:
       - db:/var/lib/postgresql/data
-
 
   app:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"
+      - 8000:8000
     volumes:
       - type: bind
         source: .
@@ -36,15 +35,15 @@ services:
       - rabbitmq
 
   redis:
-    image: "redis:latest"
+    image: redis:latest
     ports:
-      - "6379:6379"
+      - 6379:6379
 
   rabbitmq:
     image: rabbitmq:3.6-management
     ports:
-      - "15672:15672"
-      - "5672:5672"
+      - 15672:15672
+      - 5672:5672
 
 volumes:
   db: {}

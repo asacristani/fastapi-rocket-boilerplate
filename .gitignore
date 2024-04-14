@@ -166,3 +166,6 @@ openapi.json
 
 # Pulumi
 *.pyc
+
+# Mac
+.DS_Store
