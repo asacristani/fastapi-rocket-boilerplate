@@ -249,6 +249,7 @@ Also, it is possible you want to modify the expiry time of access/refresh tokens
 ### Testing
 
 - [ ] Integrity tests
+- [x] pytest-alembic
 - [x] Cover 100% with unit-testing
 
 ### Quality code

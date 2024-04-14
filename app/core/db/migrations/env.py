@@ -1,7 +1,7 @@
 from logging.config import fileConfig
 
 from alembic import context
-from sqlalchemy import engine_from_config, pool
+from sqlalchemy import MetaData, engine_from_config, pool
 from sqlmodel import SQLModel
 
 from app.settings import settings
@@ -20,7 +20,13 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 from app.core.db.migrations.models import *
 
-target_metadata = SQLModel.metadata
+meta = MetaData()
+for table in SQLModel.metadata.tables.values():
+    if table.name != "testmodel":
+        meta._add_table(table.name, table.schema, table)
+
+
+target_metadata = meta
 
 
 # other values from the config, defined by the needs of env.py,
@@ -60,15 +66,19 @@ def run_migrations_online() -> None:
     and associate a connection with the context.
 
     """
-    connectable = engine_from_config(
-        config.get_section(config.config_ini_section, {}),
-        prefix="sqlalchemy.",
-        poolclass=pool.NullPool,
-    )
+    connectable = context.config.attributes.get("connection", None)
+
+    if connectable is None:
+        connectable = engine_from_config(
+            config.get_section(config.config_ini_section, {}),
+            prefix="sqlalchemy.",
+            poolclass=pool.NullPool,
+        )
 
     with connectable.connect() as connection:
         context.configure(
-            connection=connection, target_metadata=target_metadata
+            connection=connection,
+            target_metadata=target_metadata,
         )
 
         with context.begin_transaction():
