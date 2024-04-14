@@ -28,6 +28,10 @@ class Settings(BaseSettings):
     redis_host: str
     redis_port: str
 
+    # Sentry
+    sentry_dsn: str
+    trace_rate: float = 1.0
+
     class Config:
         env_file = ".env"
 
