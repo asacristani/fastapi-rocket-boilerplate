@@ -1,4 +1,10 @@
+from typing import Any
+
+from sqladmin._queries import Query
+from starlette.requests import Request
+
 from app.core.admin.models import ModelViewCore
+from app.core.auth.functions import hash_password
 from app.core.models.record import Record
 from app.services.user.models import RevokedToken, User
 
@@ -13,6 +19,41 @@ class UserAdmin(ModelViewCore, model=User):
 
     # Detail Page
     pass
+
+    # Form page
+    async def insert_model(self, request: Request, data: dict) -> Any:
+        """Overwrite insert method for hashing the password"""
+        if "hashed_password" in data:
+            data["hashed_password"] = hash_password(data["hashed_password"])
+
+        model = await Query(self).insert(data)
+
+        Record(
+            model_type=self.model.__name__,
+            model_id=model.id,
+            source="ADMIN",
+            action="CREATE",
+            owner=request.session.get("username"),
+        ).save()
+
+        return model
+
+    async def update_model(self, request: Request, pk: str, data: dict) -> Any:
+        """Overwrite update method for hashing the password"""
+        if "hashed_password" in data:
+            data["hashed_password"] = hash_password(data["hashed_password"])
+
+        model = await Query(self).update(pk, data)
+
+        Record(
+            model_type=self.model.__name__,
+            model_id=model.id,
+            source="ADMIN",
+            action="UPDATE",
+            owner=request.session.get("username"),
+        ).save()
+
+        return model
 
     # General options
     column_labels = {
