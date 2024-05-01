@@ -1,5 +1,5 @@
 from contextvars import ContextVar
-from typing import Dict, Optional, Union
+from typing import Any, Dict, Optional, Union
 
 from sqlalchemy.engine import Engine
 from sqlalchemy.engine.url import URL
@@ -106,7 +106,7 @@ class DBSessionMeta(type):
             raise MissingSessionError
         return session
 
-    def get_one(self, model: any, key: any, value: any) -> object:
+    def get_one(self, model: Any, key: Any, value: Any) -> object:
         try:
             statement = select(model).where(
                 key == value, model.deleted == False
@@ -116,7 +116,7 @@ class DBSessionMeta(type):
         except NoResultFound:
             return None
 
-    def get_all(self, model: any, offset: int, limit: int, order_by: any):
+    def get_all(self, model: Any, offset: int, limit: int, order_by: Any):
         """Get all items excluding delete ones"""
         statement = (
             select(model)
@@ -128,20 +128,20 @@ class DBSessionMeta(type):
         result = self.session.exec(statement).all()
         return result
 
-    def update(self, item: any) -> object:
+    def update(self, item: Any) -> object:
         """Create or modify"""
         self.session.add(item)
         self.session.commit()
         self.session.refresh(item)
         return item
 
-    def delete(self, item: any) -> bool:
+    def delete(self, item: Any) -> bool:
         """TODO: Add return False when exceptions are observed"""
         self.session.delete(item)
         self.session.commit()
         return True
 
-    def count(self, model: any) -> int:
+    def count(self, model: Any) -> int:
         result = len(
             self.session.exec(
                 select(model).where(model.deleted == False)
