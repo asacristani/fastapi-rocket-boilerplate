@@ -12,7 +12,7 @@ class TestMain(TestCase):
 
     def test_endpoint_main(self):
         response = self.app.get("/")
-        assert 200 == response.status_code
+        self.assertEqual(200, response.status_code)
 
     def test_check_health_ok(self):
         with patch("app.main.get_engine", MagicMock()), patch(
@@ -21,7 +21,7 @@ class TestMain(TestCase):
             "app.main.redis", MagicMock()
         ):
             response = self.app.get("/check_health")
-            assert 200 == response.status_code
+            self.assertEqual(200, response.status_code)
 
     def test_check_health_ko(self):
         with patch(
@@ -44,10 +44,13 @@ class TestMain(TestCase):
 
             response = self.app.get("/check_health")
 
-            assert 200 == response.status_code
-            assert {
-                "celery": "down",
-                "db": "down",
-                "rabbitmq": "down",
-                "redis": "down",
-            } == response.json()
+            self.assertEqual(200, response.status_code)
+            self.assertEqual(
+                {
+                    "celery": "down",
+                    "db": "down",
+                    "rabbitmq": "down",
+                    "redis": "down",
+                },
+                response.json(),
+            )

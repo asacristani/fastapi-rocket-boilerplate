@@ -8,7 +8,7 @@ script_dir = Path(__file__).parent.absolute()
 destination_file = script_dir / "openapi.json"
 print("HOLA")
 print(destination_file)
-response = requests.get(url)
+response = requests.get(url, timeout=5)
 
 if response.status_code == 200:
     with open(destination_file, "wb") as file:

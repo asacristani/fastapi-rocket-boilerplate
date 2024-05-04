@@ -67,10 +67,10 @@ class TestDBSession(unittest.TestCase):
             self.assertIsInstance(db_session, DBSessionMeta)
 
         # Exit rollback
-        with self.assertRaises(Exception):
+        with self.assertRaises(RuntimeError):
             with DBSession() as db_session:
                 self.assertIsNotNone(db_session)
-                raise Exception("Simulated error")
+                raise RuntimeError("Simulated error")
 
         # Exit commit
         with DBSession(commit_on_exit=True) as db_session:
@@ -91,15 +91,17 @@ class TestDBSessionMeta(unittest.TestCase):
     def test_session_ok(self):
         db_test = DBSession
         session = db_test.session
-        assert session is not None
+        if session is None:
+            raise AssertionError("Session should not be None.")
 
     def test_session_missing(self):
         with patch(
             "app.core.db.session._session", MagicMock()
-        ) as mock_session, self.assertRaises(MissingSessionError):
+        ) as mock_session:
             mock_session.get.return_value = None
             db_test = DBSession
-            db_test.session
+            session = db_test.session
+            self.assertRaises(MissingSessionError, session)
 
     @patch("app.core.db.session._Session", None)
     def test_session_no_initialised(self):

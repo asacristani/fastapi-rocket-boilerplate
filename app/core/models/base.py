@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Any, Optional
 
 from sqlmodel import Field, SQLModel
 
@@ -64,7 +65,7 @@ class ModelCore(SQLModel):
         return True
 
     @classmethod
-    def get_one(cls, value: any, key: any = None) -> any:
+    def get_one(cls, value: Any, key: Any = None) -> Optional["ModelCore"]:
         """
         Get one item based in key/value
         - value: the value of the field
@@ -75,7 +76,7 @@ class ModelCore(SQLModel):
         return db.get_one(cls, key=key, value=value)
 
     @classmethod
-    def get_all(cls, offset: int = 0, limit: int = 100, order_by: any = None):
+    def get_all(cls, offset: int = 0, limit: int = 100, order_by: Any = None):
         """
         Return a list of items
         Params:

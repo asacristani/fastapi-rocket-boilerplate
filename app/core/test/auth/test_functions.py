@@ -19,24 +19,28 @@ class TestPassword(TestCase):
         password_plain = "test"
         password_hashed = hash_password(password_plain)
 
-        assert verify_password(password_plain, password_hashed)
+        if not verify_password(password_plain, password_hashed):
+            raise AssertionError("Password verification failed.")
 
     def test_verify_password_ko(self):
         password_plain = "test"
         password_hashed = hash_password(password_plain)
 
-        assert not verify_password("incorrect_password", password_hashed)
+        if verify_password("incorrect_password", password_hashed):
+            raise AssertionError("Password verification should fail.")
 
 
 class TestToken(TestCase):
     def test_create_token(self):
         access_token = create_access_token(username="test")
-        assert str == type(access_token)
+        if type(access_token) != str:
+            raise AssertionError("Access token should be of type str.")
 
     def test_get_current_user_ok(self):
         access_token = create_access_token(username="test")
         username = get_current_user(access_token)
-        assert "test" == username
+        if username != "test":
+            raise AssertionError("Username should be 'test'.")
 
     def test_get_current_user_no_username(self):
         access_token = create_jwt_token(
@@ -59,46 +63,60 @@ class TestToken(TestCase):
     def test_get_current_admin_ok(self):
         access_token = create_access_token(username="test")
         username = get_current_admin(access_token)
-        assert "test" == username
+        if username != "test":
+            raise AssertionError("Username should be 'test'.")
 
     def test_get_current_admin_no_username(self):
         access_token = create_jwt_token(
             data={}, expiration_delta=timedelta(minutes=30)
         )
         username = get_current_admin(access_token)
-        assert username is None
+        if username is not None:
+            raise AssertionError("Username should be None.")
 
     def test_get_current_admin_invalid_signature(self):
         username = get_current_admin("incorrect_token")
-        assert username is None
+        if username is not None:
+            raise AssertionError("Username should be None.")
 
     def test_get_current_admin_expired_signature(self):
         access_token = create_jwt_token(
             data={}, expiration_delta=timedelta(minutes=-30)
         )
         username = get_current_admin(access_token)
-        assert username is None
+        if username is not None:
+            raise AssertionError("Username should be None.")
 
     def test_verify_refresh_token_ok(self):
         payload = {"scopes": "refresh_token"}
         token = create_jwt_token(
             data=payload, expiration_delta=timedelta(minutes=30)
         )
-        assert payload == verify_refresh_token(token)
+        if payload != verify_refresh_token(token):
+            raise AssertionError(
+                "Payload should match the result of verify_refresh_token."
+            )
 
     def test_verify_refresh_token_no_scopes(self):
         payload = {}
         token = create_jwt_token(
             data=payload, expiration_delta=timedelta(minutes=30)
         )
-        assert verify_refresh_token(token) is None
+        if payload != verify_refresh_token(token):
+            raise AssertionError(
+                "Payload should match the result of verify_refresh_token."
+            )
 
     def test_verify_refresh_token_invalid_signature(self):
-        assert verify_refresh_token("invalid_token") is None
+        if verify_refresh_token("invalid_token") is not None:
+            raise AssertionError("Invalid token should return None.")
 
     def test_verify_refresh_token_expired_signature(self):
         payload = {"scopes": "refresh_token"}
         token = create_jwt_token(
             data=payload, expiration_delta=timedelta(minutes=-30)
         )
-        assert verify_refresh_token(token) is None
+        if verify_refresh_token(token) is not None:
+            raise AssertionError(
+                "Refresh token verification should return None."
+            )

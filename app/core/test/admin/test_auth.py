@@ -39,7 +39,8 @@ async def test_admin_auth_login_successful(admin_auth):
 
     result = await admin_auth.login(mock_request)
 
-    assert result is True
+    if result is not True:
+        raise AssertionError("Expected result to be True, but it was not.")
 
 
 @pytest.mark.asyncio
@@ -53,7 +54,8 @@ async def test_admin_auth_login_failed(admin_auth):
 
     result = await admin_auth.login(mock_request)
 
-    assert result is False
+    if result is not True:
+        raise AssertionError("Expected result to be True, but it was not.")
 
 
 @pytest.mark.asyncio
@@ -62,7 +64,8 @@ async def test_admin_auth_logout(admin_auth):
 
     result = await admin_auth.logout(mock_request)
 
-    assert result is True
+    if result is not True:
+        raise AssertionError("Expected result to be True, but it was not.")
 
 
 @pytest.mark.asyncio
@@ -71,7 +74,8 @@ async def test_admin_auth_authenticate_valid_token(admin_auth, valid_token):
 
     result = await admin_auth.authenticate(mock_request)
 
-    assert result is None
+    if result is not None:
+        raise AssertionError("Expected result to be None, but it was not.")
 
 
 @pytest.mark.asyncio
@@ -80,5 +84,10 @@ async def test_admin_auth_authenticate_invalid_token(admin_auth):
 
     result = await admin_auth.authenticate(mock_request)
 
-    assert isinstance(result, RedirectResponse)
-    assert result.status_code == 302
+    if not isinstance(result, RedirectResponse):
+        raise AssertionError(
+            "Expected result to be an instance of RedirectResponse."
+        )
+
+    if result.status_code != 302:
+        raise AssertionError("Expected status code to be 302, but it was not.")

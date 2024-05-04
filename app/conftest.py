@@ -77,7 +77,10 @@ def user_mocked_info(db_mocked_app_client):
         "password": "pass_mock",
     }
     response = db_mocked_app_client.post(url="user/register", json=user_info)
-    assert 201 == response.status_code
+    if response.status_code != 201:
+        raise AssertionError(
+            f"Expected status code 201, but got {response.status_code}"
+        )
 
     # Login
     response = db_mocked_app_client.post(
@@ -88,7 +91,10 @@ def user_mocked_info(db_mocked_app_client):
         },
     )
 
-    assert 200 == response.status_code
+    if response.status_code != 200:
+        raise AssertionError(
+            f"Expected status code 200, but got {response.status_code}"
+        )
 
     user_info["access_token"] = response.json()["access_token"]
     user_info["refresh_token"] = response.json()["refresh_token"]
