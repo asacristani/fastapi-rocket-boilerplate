@@ -6,7 +6,7 @@ import pytest
 from app.core.models.base import ModelCore
 
 
-class TestModel(ModelCore, table=True):
+class TestModel(ModelCore):
     name: str
 
 
@@ -21,49 +21,52 @@ class TestModelCore(TestCase):
 
         model_saved.delete()
 
-    def test_delete_soft(self):
+    def test_delete_soft(self) -> None:
         model_to_delete: TestModel = TestModel(name="test_delete").save()
 
         model_to_delete.delete()
 
-        assert (
-            TestModel.get_one(value="test_delete", key=TestModel.name) is None
+        self.assertIsNone(
+            TestModel.get_one(value="test_delete", key=TestModel.name)
         )
 
-    def test_delete_hard(self):
+    def test_delete_hard(self) -> None:
         model_to_delete: TestModel = TestModel(name="test_delete").save()
 
         model_to_delete.delete(hard=True)
 
-        assert (
-            TestModel.get_one(value="test_delete", key=TestModel.name) is None
+        self.assertIsNone(
+            TestModel.get_one(value="test_delete", key=TestModel.name)
         )
 
-    def test_delete_error(self):
+    def test_delete_error(self) -> None:
         model_to_delete: TestModel = TestModel(name="test_delete").save()
 
         with patch(
             "app.core.models.base.ModelCore.save", MagicMock()
         ) as save_method:
             save_method.return_value = False
-            assert not model_to_delete.delete()
+            self.assertFalse(model_to_delete.delete())
 
         model_to_delete.delete()
 
-    def test_get_one(self):
+    def test_get_one(self) -> None:
         model_to_get: TestModel = TestModel(name="model_to_get").save()
 
-        assert (
-            TestModel.get_one(value="model_to_get", key=TestModel.name)
-            == model_to_get
+        self.assertEqual(
+            TestModel.get_one(value="model_to_get", key=TestModel.name),
+            model_to_get,
         )
 
         model_to_get.delete()
 
-    def test_get_one_by_default_id(self):
+    def test_get_one_by_default_id(self) -> None:
         model_to_get: TestModel = TestModel(name="model_to_get").save()
 
-        assert TestModel.get_one(value=model_to_get.id) == model_to_get
+        self.assertEqual(
+            TestModel.get_one(value=model_to_get.id),
+            model_to_get,
+        )
 
         model_to_get.delete()
 
@@ -72,7 +75,10 @@ class TestModelCore(TestCase):
         for name in names:
             TestModel(name=name).save()
 
-        assert len(names) == len(model_list := TestModel.get_all())
+        self.assertEqual(
+            len(names),
+            len(model_list := TestModel.get_all()),
+        )
 
         for model in model_list:
             model.delete()
@@ -82,7 +88,7 @@ class TestModelCore(TestCase):
         for name in names:
             TestModel(name=name).save()
 
-        assert len(names) == TestModel.count()
+        self.assertEqual(len(names), TestModel.count())
 
         for model in TestModel.get_all():
             model.delete()

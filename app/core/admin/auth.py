@@ -39,3 +39,5 @@ class AdminAuth(AuthenticationBackend):
             )
 
         request.session.update({"username": username})
+
+        return None

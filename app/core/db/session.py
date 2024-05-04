@@ -1,5 +1,5 @@
 from contextvars import ContextVar
-from typing import Dict, Optional, Union
+from typing import Any, Dict, Optional, Union
 
 from sqlalchemy.engine import Engine
 from sqlalchemy.engine.url import URL
@@ -12,6 +12,8 @@ from starlette.middleware.base import (
 )
 from starlette.requests import Request
 from starlette.types import ASGIApp
+
+from app.core.models.base import ModelCore
 
 
 class sessionmaker(sessionmaker_):
@@ -31,8 +33,8 @@ class DBSessionMiddleware(BaseHTTPMiddleware):
         app: ASGIApp,
         db_url: Optional[Union[str, URL]] = None,
         custom_engine: Optional[Engine] = None,
-        engine_args: Dict = None,
-        session_args: Dict = None,
+        engine_args: Optional[Dict[Any, Any]] = None,
+        session_args: Optional[Dict[Any, Any]] = None,
         commit_on_exit: bool = False,
     ):
         super().__init__(app)
@@ -106,7 +108,9 @@ class DBSessionMeta(type):
             raise MissingSessionError
         return session
 
-    def get_one(self, model: any, key: any, value: any) -> object:
+    def get_one(
+        self, model: ModelCore, key: Any, value: Any
+    ) -> Optional[ModelCore]:
         try:
             statement = select(model).where(
                 key == value, model.deleted == False
@@ -116,7 +120,9 @@ class DBSessionMeta(type):
         except NoResultFound:
             return None
 
-    def get_all(self, model: any, offset: int, limit: int, order_by: any):
+    def get_all(
+        self, model: ModelCore, offset: int, limit: int, order_by: Any
+    ):
         """Get all items excluding delete ones"""
         statement = (
             select(model)
@@ -128,20 +134,20 @@ class DBSessionMeta(type):
         result = self.session.exec(statement).all()
         return result
 
-    def update(self, item: any) -> object:
+    def update(self, item: Any) -> object:
         """Create or modify"""
         self.session.add(item)
         self.session.commit()
         self.session.refresh(item)
         return item
 
-    def delete(self, item: any) -> bool:
+    def delete(self, item: Any) -> bool:
         """TODO: Add return False when exceptions are observed"""
         self.session.delete(item)
         self.session.commit()
         return True
 
-    def count(self, model: any) -> int:
+    def count(self, model: Any) -> int:
         result = len(
             self.session.exec(
                 select(model).where(model.deleted == False)
@@ -152,7 +158,9 @@ class DBSessionMeta(type):
 
 class DBSession(metaclass=DBSessionMeta):
     def __init__(
-        self, session_args: Dict = None, commit_on_exit: bool = False
+        self,
+        session_args: Optional[Dict[Any, Any]] = None,
+        commit_on_exit: bool = False,
     ):
         self.token = None
         self.session_args = session_args or {}

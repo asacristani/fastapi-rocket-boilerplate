@@ -4,6 +4,7 @@ from sqladmin import ModelView
 from sqladmin._queries import Query
 from starlette.requests import Request
 
+from app.core.models.base import ModelCore
 from app.core.models.record import Record
 
 source = "ADMIN"
@@ -52,7 +53,7 @@ class ModelViewCore(ModelView):
     async def delete_model(self, request: Request, pk: Any) -> None:
         """Overwrite default delete method for
         safe_delete/reverse_delete methods"""
-        model: object = await self.get_object_for_edit(pk)
+        model: ModelCore = await self.get_object_for_edit(pk)
         if model.deleted:
             deleted = False
             action_description = "REVERSE_DELETE"

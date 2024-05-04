@@ -24,7 +24,12 @@ class TestUserRoutes(TestCase):
             },
         )
 
-        assert response.status_code == status.HTTP_201_CREATED
+        if response.status_code != status.HTTP_201_CREATED:
+            raise AssertionError(
+                "Expected status code 201, but got {}".format(
+                    response.status_code
+                )
+            )
 
         # Register the same user
         response = self.app.post(
@@ -35,7 +40,12 @@ class TestUserRoutes(TestCase):
             },
         )
 
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        if response.status_code != status.HTTP_400_BAD_REQUEST:
+            raise AssertionError(
+                "Expected status code 400, but got {}".format(
+                    response.status_code
+                )
+            )
 
     def test_login(self):
         # Login ok
@@ -47,7 +57,12 @@ class TestUserRoutes(TestCase):
             },
         )
 
-        assert response.status_code == status.HTTP_200_OK
+        if response.status_code != status.HTTP_200_OK:
+            raise AssertionError(
+                "Expected status code 200, but got {}".format(
+                    response.status_code
+                )
+            )
 
         # Login ko
         response = self.app.post(
@@ -58,7 +73,12 @@ class TestUserRoutes(TestCase):
             },
         )
 
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        if response.status_code != status.HTTP_400_BAD_REQUEST:
+            raise AssertionError(
+                "Expected status code 400, but got {}".format(
+                    response.status_code
+                )
+            )
 
     def test_refresh_token(self):
         # Login
@@ -83,8 +103,14 @@ class TestUserRoutes(TestCase):
             },
         )
 
-        assert "access_token" in response.json()
-        assert response.status_code == status.HTTP_200_OK
+        if "access_token" not in response.json():
+            raise AssertionError("Expected 'access_token' in response JSON")
+        if response.status_code != status.HTTP_200_OK:
+            raise AssertionError(
+                "Expected status code 200, but got {}".format(
+                    response.status_code
+                )
+            )
 
         # Refresh token ko
         response = self.app.post(
@@ -94,7 +120,12 @@ class TestUserRoutes(TestCase):
             },
         )
 
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        if response.status_code != status.HTTP_400_BAD_REQUEST:
+            raise AssertionError(
+                "Expected status code 400, but got {}".format(
+                    response.status_code
+                )
+            )
 
     def test_logout_and_protected(self):
         # Access to protected
@@ -108,8 +139,12 @@ class TestUserRoutes(TestCase):
             },
         )
 
-        assert response.status_code == status.HTTP_200_OK
-
+        if response.status_code != status.HTTP_200_OK:
+            raise AssertionError(
+                "Expected status code 200, but got {}".format(
+                    response.status_code
+                )
+            )
         # Login again
         response = self.app.post(
             url="user/login",
@@ -119,7 +154,13 @@ class TestUserRoutes(TestCase):
             },
         )
 
-        assert response.status_code == status.HTTP_200_OK
+        if response.status_code != status.HTTP_200_OK:
+            raise AssertionError(
+                "Expected status code 200, but got {}".format(
+                    response.status_code
+                )
+            )
+
         refresh_token = response.json()["refresh_token"]
 
         # Logout and access to protected
@@ -127,7 +168,12 @@ class TestUserRoutes(TestCase):
             url="user/logout", json={"refresh_token": refresh_token}
         )
 
-        assert response.status_code == status.HTTP_200_OK
+        if response.status_code != status.HTTP_200_OK:
+            raise AssertionError(
+                "Expected status code 200, but got {}".format(
+                    response.status_code
+                )
+            )
 
         # Refresh revoked token
         response = self.app.post(
@@ -137,11 +183,21 @@ class TestUserRoutes(TestCase):
             },
         )
 
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        if response.status_code != status.HTTP_400_BAD_REQUEST:
+            raise AssertionError(
+                "Expected status code 400, but got {}".format(
+                    response.status_code
+                )
+            )
 
         # Access to protected without valid token
         response = self.app.get(
             url="user/protected",
         )
 
-        assert response.status_code == status.HTTP_401_UNAUTHORIZED
+        if response.status_code != status.HTTP_401_UNAUTHORIZED:
+            raise AssertionError(
+                "Expected status code 401, but got {}".format(
+                    response.status_code
+                )
+            )
